@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netplus.catpark.dao.define.ParkingPositionDefineMapper">
+    <select id="selectParkingList" resultType="com.netplus.catpark.domain.po.ParkingPosition" parameterType="string">
+        SELECT *
+        FROM parking_position
+        WHERE position_geohash
+        LIKE  CONCAT (#{geoHash},'%')
+        AND deleted = 0;
+    </select>
+</mapper>

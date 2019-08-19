@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!--覆盖生成XML文件-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
+        <!-- 自定义注释 -->
+        <commentGenerator>
+            <!-- 是否生成注释代时间戳-->
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!--连接数据库-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://120.78.157.253:3306/cat_park?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;useSSL=false" userId="root" password="Cqupt2017211678."/>
+
+        <!-- 是否使用bigDecimal默认false：把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时：把JDBC DECIMAL 和NUMERIC 类型解析为java.math.BigDecimal-->
+        <javaTypeResolver type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
+            <property name="forceBigDecimals" value="true"/>
+        </javaTypeResolver>
+
+        <!--生成PO（Java实体类）-->
+        <javaModelGenerator targetPackage="com.netplus.catpark.domain.po" targetProject="./src/main/java">
+            <!-- 是否对model添加 构造构造方法，构造方法包含了所有的field；而不是使用setter方法 -->
+            <property name="constructorBased" value="true"/>
+            <!-- 是否允许子包，默认为false，在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，即targetPackage.schemaName.tableName -->
+            <property name="enableSubPackages" value="false"/>
+
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--生成mapper xml-->
+        <sqlMapGenerator targetPackage="generator" targetProject="./src/main/resources/mapper/">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!--生成dao接口类别-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.netplus.catpark.dao.generator" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!--用户表-->
+        <!--<table tableName="user" domainObjectName="User"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>-->
+
+        <!--车牌表-->
+        <table tableName="user_license_rel" domainObjectName="UserLicenseRel"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+
+        <table tableName="user_parking" domainObjectName="UserParking"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+
+        <table tableName="parking" domainObjectName="Parking"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+
+        <table tableName="parking_position" domainObjectName="ParkingPosition"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+
+        <table tableName="parking_space" domainObjectName="ParkingSpace"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+
+        <table tableName="order_table" domainObjectName="OrderTable"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+    </context>
+</generatorConfiguration>
+
+
