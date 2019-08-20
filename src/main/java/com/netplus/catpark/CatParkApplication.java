@@ -10,9 +10,6 @@ public class CatParkApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CatParkApplication.class, args);
-
-
-
     }
 
 }
