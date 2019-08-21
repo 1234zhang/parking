@@ -120,6 +120,7 @@ public class BookParkingService {
                     lat(b.getLatitude()).
                     lng(b.getLongitude()).
                     parkingSpaceName(parkingList.get(0).getParkingName()).
+                    id(b.getId()).
                     build();
             spaceInfoBOList.add(build);
         });
@@ -155,6 +156,10 @@ public class BookParkingService {
         orderTable.setParkingSpaceId(bookParkingSpaceDTO.getParkingSpaceId());
 
         orderTableMapper.insert(orderTable);
+        //更新停车位状态
+        parkingSpaceDefineMapper.updateParkingSpaceStatus((byte)3,
+                bookParkingSpaceDTO.getParkingId(),
+                bookParkingSpaceDTO.getParkingSpaceId());
         BookSuccessDTO build = BookSuccessDTO.
                 builder().
                 parkingId(bookParkingSpaceDTO.getParkingId()).

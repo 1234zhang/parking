@@ -10,4 +10,11 @@
         </foreach>
         AND parking_space_status = 0
     </select>
+    <update id="updateParkingSpaceStatus">
+        UPDATE parking_space
+        SET parking_space_status = #{status}
+        WHERE parking_id = #{parkingId}
+        AND parking_space_id = #{parkingSpaceId}
+        AND DELETED = 0;
+    </update>
 </mapper>

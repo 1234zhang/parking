@@ -13,4 +13,15 @@ import java.util.List;
 
 public interface ParkingSpaceDefineMapper {
     List<ParkingSpace> getEmptySpace(@Param(value = "list") List<Long> list);
+
+    /**
+     * 更新停车位状态
+     * @param status
+     * @param parkingId
+     * @param parkingSpaceId
+     * @return
+     */
+    int updateParkingSpaceStatus(@Param("status") Byte status,
+                                 @Param("parkingId") Long parkingId,
+                                 @Param("parkingSpaceId") String parkingSpaceId);
 }

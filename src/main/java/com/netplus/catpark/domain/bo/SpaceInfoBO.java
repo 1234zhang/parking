@@ -20,4 +20,5 @@ public class SpaceInfoBO {
     private Double lng;
     private String parkingSpaceId;
     private Long parkingId;
+    private Long id;
 }
