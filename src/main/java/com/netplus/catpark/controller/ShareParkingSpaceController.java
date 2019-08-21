@@ -1,8 +1,9 @@
 package com.netplus.catpark.controller;
 
+import com.netplus.catpark.domain.dto.ParkingListDTO;
+import com.netplus.catpark.domain.dto.PositionDTO;
 import com.netplus.catpark.domain.dto.PublishSpaceDTO;
-import com.netplus.catpark.domain.dto.PublishSuccessDTO;
-import com.netplus.catpark.domain.dto.SuccessDTO;
+import com.netplus.catpark.domain.dto.IsSuccessDTO;
 import com.netplus.catpark.domain.model.Response;
 import com.netplus.catpark.service.ShareSpaceService;
 import io.swagger.annotations.Api;
@@ -25,15 +26,21 @@ public class ShareParkingSpaceController {
     ShareSpaceService shareSpaceService;
 
     @PostMapping("/phoneCheck")
-    public Response<SuccessDTO> phoneCheck(@RequestParam
+    public Response<IsSuccessDTO> phoneCheck(@RequestParam
                                                @ApiParam(name = "phoneNum", value = "使用url请求", required = true)
                                                        String phoneNum){
         return shareSpaceService.phoneCheck(phoneNum);
     }
     @PostMapping("/publishSpace")
-    public Response<PublishSuccessDTO> publishSpace(@RequestBody
+    public Response<IsSuccessDTO> publishSpace(@RequestBody
                                                         @ApiParam(name = "publishSpaceDTO", value = "使用json请求", required = true)
                                                             PublishSpaceDTO publishSpaceDTO){
         return shareSpaceService.publishSpace(publishSpaceDTO);
+    }
+    @PostMapping("/getNearbySpace")
+    public Response<ParkingListDTO> getNearbySpace(@RequestBody
+                                                         @ApiParam(name = "positionDTO", value = "使用json请求",required = true)
+                                                                 PositionDTO positionDTO){
+        return shareSpaceService.getNearbyParkingList(positionDTO);
     }
 }

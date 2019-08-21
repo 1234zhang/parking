@@ -84,7 +84,9 @@ public class BookParkingService {
                     emptySpace(emptySpaceMap.get(b.getId())).build();
             parkingBOList.add(build);
         });
-        return new Response<ParkingListDTO>(0,"success", ParkingListDTO.builder().parkingList(parkingBOList).build());
+        return new Response<ParkingListDTO>(0,"success", ParkingListDTO.builder().
+                parkingList(Collections.singletonList(parkingBOList)).
+                build());
     }
 
     /**

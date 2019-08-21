@@ -1,9 +1,13 @@
 package com.netplus.catpark.service;
 
+import com.netplus.catpark.dao.define.UserParkingDefineMapper;
 import com.netplus.catpark.dao.generator.UserParkingMapper;
+import com.netplus.catpark.domain.bo.SpaceInfoBO;
+import com.netplus.catpark.domain.bo.UserParkingSpaceInfoBO;
+import com.netplus.catpark.domain.dto.ParkingListDTO;
+import com.netplus.catpark.domain.dto.PositionDTO;
 import com.netplus.catpark.domain.dto.PublishSpaceDTO;
-import com.netplus.catpark.domain.dto.PublishSuccessDTO;
-import com.netplus.catpark.domain.dto.SuccessDTO;
+import com.netplus.catpark.domain.dto.IsSuccessDTO;
 import com.netplus.catpark.domain.model.Response;
 import com.netplus.catpark.domain.po.UserParking;
 import com.netplus.catpark.service.util.*;
@@ -12,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -33,6 +37,9 @@ public class ShareSpaceService {
 
     @Autowired
     UserParkingMapper userParkingMapper;
+
+    @Autowired
+    UserParkingDefineMapper userParkingDefineMapper;
     /**
      * 手机发送验证码
      * @param phoneNum
@@ -40,7 +47,7 @@ public class ShareSpaceService {
      */
     public Response phoneCheck(String phoneNum){
         if(!ParamCheckUtil.isMobile(phoneNum)){
-            return new Response(1,"手机号格式错误", SuccessDTO.builder().isSuccess(false).build());
+            return new Response(1,"手机号格式错误", IsSuccessDTO.builder().isSuccess(false).build());
         }
         //获取六位验证码
         String authCode = CodeProductUtil.getRandomVerifyCode();
@@ -48,9 +55,9 @@ public class ShareSpaceService {
         if(shortMessageUtil.sendSms(phoneNum, authCode)){
             //将验证码存入redis中，进行下一步的验证
             redisTemplate.opsForValue().set(keepAuthCode + phoneNum, authCode, 5L, TimeUnit.MINUTES);
-            return new Response(0,"success", SuccessDTO.builder().isSuccess(true).build());
+            return new Response(0,"success", IsSuccessDTO.builder().isSuccess(true).build());
         }
-        return new Response(1,"fail",SuccessDTO.builder().isSuccess(false).build());
+        return new Response(1,"fail",IsSuccessDTO.builder().isSuccess(false).build());
     }
 
     /**
@@ -58,7 +65,7 @@ public class ShareSpaceService {
      * @param publishSpaceDTO
      * @return
      */
-    public Response<PublishSuccessDTO> publishSpace(PublishSpaceDTO publishSpaceDTO){
+    public Response<IsSuccessDTO> publishSpace(PublishSpaceDTO publishSpaceDTO){
         Long userId = 1L;
         if(publishSpaceDTO.getPhoneNum() == null
                 || publishSpaceDTO.getAuthCode() == null){
@@ -85,6 +92,43 @@ public class ShareSpaceService {
         userParking.setDeleted(false);
         userParking.setPositionGeoHash(GeoHashHelperUtil.encode(publishSpaceDTO.getLat(),publishSpaceDTO.getLng()));
         userParkingMapper.insert(userParking);
-        return new Response<>(0,"success", PublishSuccessDTO.builder().isSuccess(true).build());
+        return new Response<>(0,"success", IsSuccessDTO.builder().isSuccess(true).build());
+    }
+
+    /**
+     * 根据用户当前坐标获取用户周围的停车位
+     * @param positionDTO
+     * @return
+     */
+    public Response<ParkingListDTO> getNearbyParkingList(PositionDTO positionDTO){
+        if(positionDTO.getLat() == null || positionDTO.getLng() == null){
+            return ResponseUtil.makeFail("参数为空");
+        }
+        //获取该点周围的共享停车位
+        List<String> geoHashList = GeoHashHelperUtil.around(positionDTO.getLat(),positionDTO.getLng());
+        List<UserParkingSpaceInfoBO> userParkingSpaceInfoBOList = new ArrayList<>();
+        Set<Long> parkingIdSet = new HashSet<>();
+        List<UserParking> userParkingList = new ArrayList<>();
+        geoHashList.forEach(b -> {
+            System.out.println(b);
+            userParkingList.addAll(userParkingDefineMapper.getNearbyParking(b.substring(0,5)));
+        });
+
+        userParkingList.forEach(b -> {
+            if(!parkingIdSet.contains(b.getId())) {
+                UserParkingSpaceInfoBO build = UserParkingSpaceInfoBO.
+                        builder().
+                        userParkingSpaceId(b.getId()).
+                        lat(b.getLatitude()).
+                        lng(b.getLongitude()).
+                        build();
+                userParkingSpaceInfoBOList.add(build);
+                parkingIdSet.add(b.getId());
+            }
+        });
+
+        return new Response(0,"success", ParkingListDTO.
+                builder().
+                parkingList(Collections.singletonList(userParkingSpaceInfoBOList)).build());
     }
 }

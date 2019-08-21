@@ -24,5 +24,5 @@ import java.util.List;
 @NoArgsConstructor
 public class ParkingListDTO {
     @ApiModelProperty
-    List<ParkingBO> parkingList;
+    List<Object> parkingList;
 }

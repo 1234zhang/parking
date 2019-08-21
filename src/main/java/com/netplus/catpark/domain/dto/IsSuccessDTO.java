@@ -16,7 +16,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ApiModel
-public class PublishSuccessDTO {
+public class IsSuccessDTO {
     @ApiModelProperty
     private Boolean isSuccess;
 }
