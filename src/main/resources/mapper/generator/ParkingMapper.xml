@@ -7,8 +7,8 @@
       <arg column="parking_name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="parking_phone_num" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="gmt_create" javaType="java.util.Date" jdbcType="DATE" />
-      <arg column="gmt_update" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="gmt_update" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="deleted" javaType="java.lang.Boolean" jdbcType="BIT" />
     </constructor>
   </resultMap>
@@ -103,7 +103,7 @@
       address, gmt_create, gmt_update, 
       deleted)
     values (#{id,jdbcType=BIGINT}, #{parkingName,jdbcType=VARCHAR}, #{parkingPhoneNum,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=DATE}, #{gmtUpdate,jdbcType=DATE}, 
+      #{address,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
       #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.netplus.catpark.domain.po.Parking">
@@ -145,10 +145,10 @@
         #{address,jdbcType=VARCHAR},
       </if>
       <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=DATE},
+        #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="gmtUpdate != null">
-        #{gmtUpdate,jdbcType=DATE},
+        #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
@@ -171,10 +171,10 @@
         address = #{record.address,jdbcType=VARCHAR},
       </if>
       <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=DATE},
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.gmtUpdate != null">
-        gmt_update = #{record.gmtUpdate,jdbcType=DATE},
+        gmt_update = #{record.gmtUpdate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.deleted != null">
         deleted = #{record.deleted,jdbcType=BIT},
@@ -190,8 +190,8 @@
       parking_name = #{record.parkingName,jdbcType=VARCHAR},
       parking_phone_num = #{record.parkingPhoneNum,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
-      gmt_create = #{record.gmtCreate,jdbcType=DATE},
-      gmt_update = #{record.gmtUpdate,jdbcType=DATE},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_update = #{record.gmtUpdate,jdbcType=TIMESTAMP},
       deleted = #{record.deleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -210,10 +210,10 @@
         address = #{address,jdbcType=VARCHAR},
       </if>
       <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=DATE},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="gmtUpdate != null">
-        gmt_update = #{gmtUpdate,jdbcType=DATE},
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
       <if test="deleted != null">
         deleted = #{deleted,jdbcType=BIT},
@@ -226,8 +226,8 @@
     set parking_name = #{parkingName,jdbcType=VARCHAR},
       parking_phone_num = #{parkingPhoneNum,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
-      gmt_create = #{gmtCreate,jdbcType=DATE},
-      gmt_update = #{gmtUpdate,jdbcType=DATE},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>

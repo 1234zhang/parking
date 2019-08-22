@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.netplus.catpark.dao.generator.UserParkingOrderTableMapper">
-  <resultMap id="BaseResultMap" type="com.netplus.catpark.domain.po.UserParkingOrderTable">
+<mapper namespace="com.netplus.catpark.dao.generator.CommunityMapper">
+  <resultMap id="BaseResultMap" type="com.netplus.catpark.domain.po.Community">
     <constructor>
       <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="user_parking_id" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="payment" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="order_status" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="text" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="gmt_update" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="deleted" javaType="java.lang.Boolean" jdbcType="BIT" />
-      <arg column="price" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="license_plate" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -74,17 +71,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, user_parking_id, payment, order_status, gmt_create, gmt_update, deleted, 
-    price, license_plate
+    id, user_id, title, text, gmt_create, gmt_update, deleted
   </sql>
-  <select id="selectByExample" parameterType="com.netplus.catpark.domain.po.UserParkingOrderTableExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.netplus.catpark.domain.po.CommunityExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from user_parking_order_table
+    from community
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,25 +91,23 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from user_parking_order_table
+    from community
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from user_parking_order_table
+    delete from community
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.netplus.catpark.domain.po.UserParkingOrderTable">
-    insert into user_parking_order_table (id, user_id, user_parking_id, 
-      payment, order_status, gmt_create, 
-      gmt_update, deleted, price, 
-      license_plate)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userParkingId,jdbcType=BIGINT}, 
-      #{payment,jdbcType=INTEGER}, #{orderStatus,jdbcType=TINYINT}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-      #{gmtUpdate,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{price,jdbcType=INTEGER}, 
-      #{licensePlate,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.netplus.catpark.domain.po.Community">
+    insert into community (id, user_id, title, 
+      text, gmt_create, gmt_update, 
+      deleted)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
+      #{text,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
+      #{deleted,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.netplus.catpark.domain.po.UserParkingOrderTable">
-    insert into user_parking_order_table
+  <insert id="insertSelective" parameterType="com.netplus.catpark.domain.po.Community">
+    insert into community
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -121,14 +115,11 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="userParkingId != null">
-        user_parking_id,
+      <if test="title != null">
+        title,
       </if>
-      <if test="payment != null">
-        payment,
-      </if>
-      <if test="orderStatus != null">
-        order_status,
+      <if test="text != null">
+        text,
       </if>
       <if test="gmtCreate != null">
         gmt_create,
@@ -139,12 +130,6 @@
       <if test="deleted != null">
         deleted,
       </if>
-      <if test="price != null">
-        price,
-      </if>
-      <if test="licensePlate != null">
-        license_plate,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -153,14 +138,11 @@
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
       </if>
-      <if test="userParkingId != null">
-        #{userParkingId,jdbcType=BIGINT},
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
       </if>
-      <if test="payment != null">
-        #{payment,jdbcType=INTEGER},
-      </if>
-      <if test="orderStatus != null">
-        #{orderStatus,jdbcType=TINYINT},
+      <if test="text != null">
+        #{text,jdbcType=VARCHAR},
       </if>
       <if test="gmtCreate != null">
         #{gmtCreate,jdbcType=TIMESTAMP},
@@ -171,16 +153,10 @@
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
       </if>
-      <if test="price != null">
-        #{price,jdbcType=INTEGER},
-      </if>
-      <if test="licensePlate != null">
-        #{licensePlate,jdbcType=VARCHAR},
-      </if>
     </trim>
   </insert>
   <update id="updateByExampleSelective" parameterType="map">
-    update user_parking_order_table
+    update community
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
@@ -188,14 +164,11 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=BIGINT},
       </if>
-      <if test="record.userParkingId != null">
-        user_parking_id = #{record.userParkingId,jdbcType=BIGINT},
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
       </if>
-      <if test="record.payment != null">
-        payment = #{record.payment,jdbcType=INTEGER},
-      </if>
-      <if test="record.orderStatus != null">
-        order_status = #{record.orderStatus,jdbcType=TINYINT},
+      <if test="record.text != null">
+        text = #{record.text,jdbcType=VARCHAR},
       </if>
       <if test="record.gmtCreate != null">
         gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
@@ -206,47 +179,35 @@
       <if test="record.deleted != null">
         deleted = #{record.deleted,jdbcType=BIT},
       </if>
-      <if test="record.price != null">
-        price = #{record.price,jdbcType=INTEGER},
-      </if>
-      <if test="record.licensePlate != null">
-        license_plate = #{record.licensePlate,jdbcType=VARCHAR},
-      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update user_parking_order_table
+    update community
     set id = #{record.id,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
-      user_parking_id = #{record.userParkingId,jdbcType=BIGINT},
-      payment = #{record.payment,jdbcType=INTEGER},
-      order_status = #{record.orderStatus,jdbcType=TINYINT},
+      title = #{record.title,jdbcType=VARCHAR},
+      text = #{record.text,jdbcType=VARCHAR},
       gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       gmt_update = #{record.gmtUpdate,jdbcType=TIMESTAMP},
-      deleted = #{record.deleted,jdbcType=BIT},
-      price = #{record.price,jdbcType=INTEGER},
-      license_plate = #{record.licensePlate,jdbcType=VARCHAR}
+      deleted = #{record.deleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.netplus.catpark.domain.po.UserParkingOrderTable">
-    update user_parking_order_table
+  <update id="updateByPrimaryKeySelective" parameterType="com.netplus.catpark.domain.po.Community">
+    update community
     <set>
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="userParkingId != null">
-        user_parking_id = #{userParkingId,jdbcType=BIGINT},
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="payment != null">
-        payment = #{payment,jdbcType=INTEGER},
-      </if>
-      <if test="orderStatus != null">
-        order_status = #{orderStatus,jdbcType=TINYINT},
+      <if test="text != null">
+        text = #{text,jdbcType=VARCHAR},
       </if>
       <if test="gmtCreate != null">
         gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
@@ -257,26 +218,17 @@
       <if test="deleted != null">
         deleted = #{deleted,jdbcType=BIT},
       </if>
-      <if test="price != null">
-        price = #{price,jdbcType=INTEGER},
-      </if>
-      <if test="licensePlate != null">
-        license_plate = #{licensePlate,jdbcType=VARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.netplus.catpark.domain.po.UserParkingOrderTable">
-    update user_parking_order_table
+  <update id="updateByPrimaryKey" parameterType="com.netplus.catpark.domain.po.Community">
+    update community
     set user_id = #{userId,jdbcType=BIGINT},
-      user_parking_id = #{userParkingId,jdbcType=BIGINT},
-      payment = #{payment,jdbcType=INTEGER},
-      order_status = #{orderStatus,jdbcType=TINYINT},
+      title = #{title,jdbcType=VARCHAR},
+      text = #{text,jdbcType=VARCHAR},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
-      deleted = #{deleted,jdbcType=BIT},
-      price = #{price,jdbcType=INTEGER},
-      license_plate = #{licensePlate,jdbcType=VARCHAR}
+      deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

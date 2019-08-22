@@ -2,7 +2,6 @@ package com.netplus.catpark.domain.po;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class OrderTableExample {
@@ -104,32 +103,6 @@ public class OrderTableExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -512,6 +485,126 @@ public class OrderTableExample {
             return (Criteria) this;
         }
 
+        public Criteria andBeginParkingTimeIsNull() {
+            addCriterion("begin_parking_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeIsNotNull() {
+            addCriterion("begin_parking_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeEqualTo(Date value) {
+            addCriterion("begin_parking_time =", value, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeNotEqualTo(Date value) {
+            addCriterion("begin_parking_time <>", value, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeGreaterThan(Date value) {
+            addCriterion("begin_parking_time >", value, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("begin_parking_time >=", value, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeLessThan(Date value) {
+            addCriterion("begin_parking_time <", value, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeLessThanOrEqualTo(Date value) {
+            addCriterion("begin_parking_time <=", value, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeIn(List<Date> values) {
+            addCriterion("begin_parking_time in", values, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeNotIn(List<Date> values) {
+            addCriterion("begin_parking_time not in", values, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeBetween(Date value1, Date value2) {
+            addCriterion("begin_parking_time between", value1, value2, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeNotBetween(Date value1, Date value2) {
+            addCriterion("begin_parking_time not between", value1, value2, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndParkingTimeIsNull() {
+            addCriterion("end_parking_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndParkingTimeIsNotNull() {
+            addCriterion("end_parking_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndParkingTimeEqualTo(Date value) {
+            addCriterion("end_parking_time =", value, "endParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndParkingTimeNotEqualTo(Date value) {
+            addCriterion("end_parking_time <>", value, "endParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndParkingTimeGreaterThan(Date value) {
+            addCriterion("end_parking_time >", value, "endParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndParkingTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("end_parking_time >=", value, "endParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndParkingTimeLessThan(Date value) {
+            addCriterion("end_parking_time <", value, "endParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndParkingTimeLessThanOrEqualTo(Date value) {
+            addCriterion("end_parking_time <=", value, "endParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndParkingTimeIn(List<Date> values) {
+            addCriterion("end_parking_time in", values, "endParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndParkingTimeNotIn(List<Date> values) {
+            addCriterion("end_parking_time not in", values, "endParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndParkingTimeBetween(Date value1, Date value2) {
+            addCriterion("end_parking_time between", value1, value2, "endParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndParkingTimeNotBetween(Date value1, Date value2) {
+            addCriterion("end_parking_time not between", value1, value2, "endParkingTime");
+            return (Criteria) this;
+        }
+
         public Criteria andGmtCreateIsNull() {
             addCriterion("gmt_create is null");
             return (Criteria) this;
@@ -523,52 +616,52 @@ public class OrderTableExample {
         }
 
         public Criteria andGmtCreateEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_create =", value, "gmtCreate");
+            addCriterion("gmt_create =", value, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_create <>", value, "gmtCreate");
+            addCriterion("gmt_create <>", value, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateGreaterThan(Date value) {
-            addCriterionForJDBCDate("gmt_create >", value, "gmtCreate");
+            addCriterion("gmt_create >", value, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_create >=", value, "gmtCreate");
+            addCriterion("gmt_create >=", value, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateLessThan(Date value) {
-            addCriterionForJDBCDate("gmt_create <", value, "gmtCreate");
+            addCriterion("gmt_create <", value, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_create <=", value, "gmtCreate");
+            addCriterion("gmt_create <=", value, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateIn(List<Date> values) {
-            addCriterionForJDBCDate("gmt_create in", values, "gmtCreate");
+            addCriterion("gmt_create in", values, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("gmt_create not in", values, "gmtCreate");
+            addCriterion("gmt_create not in", values, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("gmt_create between", value1, value2, "gmtCreate");
+            addCriterion("gmt_create between", value1, value2, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("gmt_create not between", value1, value2, "gmtCreate");
+            addCriterion("gmt_create not between", value1, value2, "gmtCreate");
             return (Criteria) this;
         }
 
@@ -583,52 +676,52 @@ public class OrderTableExample {
         }
 
         public Criteria andGmtUpdateEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_update =", value, "gmtUpdate");
+            addCriterion("gmt_update =", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_update <>", value, "gmtUpdate");
+            addCriterion("gmt_update <>", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateGreaterThan(Date value) {
-            addCriterionForJDBCDate("gmt_update >", value, "gmtUpdate");
+            addCriterion("gmt_update >", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_update >=", value, "gmtUpdate");
+            addCriterion("gmt_update >=", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateLessThan(Date value) {
-            addCriterionForJDBCDate("gmt_update <", value, "gmtUpdate");
+            addCriterion("gmt_update <", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_update <=", value, "gmtUpdate");
+            addCriterion("gmt_update <=", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateIn(List<Date> values) {
-            addCriterionForJDBCDate("gmt_update in", values, "gmtUpdate");
+            addCriterion("gmt_update in", values, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("gmt_update not in", values, "gmtUpdate");
+            addCriterion("gmt_update not in", values, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("gmt_update between", value1, value2, "gmtUpdate");
+            addCriterion("gmt_update between", value1, value2, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("gmt_update not between", value1, value2, "gmtUpdate");
+            addCriterion("gmt_update not between", value1, value2, "gmtUpdate");
             return (Criteria) this;
         }
 
@@ -689,6 +782,76 @@ public class OrderTableExample {
 
         public Criteria andDeletedNotBetween(Boolean value1, Boolean value2) {
             addCriterion("deleted not between", value1, value2, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateIsNull() {
+            addCriterion("license_plate is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateIsNotNull() {
+            addCriterion("license_plate is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateEqualTo(String value) {
+            addCriterion("license_plate =", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateNotEqualTo(String value) {
+            addCriterion("license_plate <>", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateGreaterThan(String value) {
+            addCriterion("license_plate >", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateGreaterThanOrEqualTo(String value) {
+            addCriterion("license_plate >=", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateLessThan(String value) {
+            addCriterion("license_plate <", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateLessThanOrEqualTo(String value) {
+            addCriterion("license_plate <=", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateLike(String value) {
+            addCriterion("license_plate like", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateNotLike(String value) {
+            addCriterion("license_plate not like", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateIn(List<String> values) {
+            addCriterion("license_plate in", values, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateNotIn(List<String> values) {
+            addCriterion("license_plate not in", values, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateBetween(String value1, String value2) {
+            addCriterion("license_plate between", value1, value2, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateNotBetween(String value1, String value2) {
+            addCriterion("license_plate not between", value1, value2, "licensePlate");
             return (Criteria) this;
         }
     }

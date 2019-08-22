@@ -21,7 +21,9 @@ public class UserParkingOrderTable {
 
     private Integer price;
 
-    public UserParkingOrderTable(Long id, Long userId, Long userParkingId, Integer payment, Byte orderStatus, Date gmtCreate, Date gmtUpdate, Boolean deleted, Integer price) {
+    private String licensePlate;
+
+    public UserParkingOrderTable(Long id, Long userId, Long userParkingId, Integer payment, Byte orderStatus, Date gmtCreate, Date gmtUpdate, Boolean deleted, Integer price, String licensePlate) {
         this.id = id;
         this.userId = userId;
         this.userParkingId = userParkingId;
@@ -31,6 +33,7 @@ public class UserParkingOrderTable {
         this.gmtUpdate = gmtUpdate;
         this.deleted = deleted;
         this.price = price;
+        this.licensePlate = licensePlate;
     }
 
     public UserParkingOrderTable() {
@@ -107,5 +110,13 @@ public class UserParkingOrderTable {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate == null ? null : licensePlate.trim();
     }
 }

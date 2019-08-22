@@ -9,9 +9,12 @@
       <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="parking_space_id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="order_status" javaType="java.lang.Byte" jdbcType="TINYINT" />
-      <arg column="gmt_create" javaType="java.util.Date" jdbcType="DATE" />
-      <arg column="gmt_update" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="begin_parking_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="end_parking_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="gmt_update" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="deleted" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="license_plate" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -73,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, order_id, parking_id, user_id, parking_space_id, order_status, gmt_create, gmt_update, 
-    deleted
+    id, order_id, parking_id, user_id, parking_space_id, order_status, begin_parking_time, 
+    end_parking_time, gmt_create, gmt_update, deleted, license_plate
   </sql>
   <select id="selectByExample" parameterType="com.netplus.catpark.domain.po.OrderTableExample" resultMap="BaseResultMap">
     select
@@ -104,11 +107,13 @@
   <insert id="insert" parameterType="com.netplus.catpark.domain.po.OrderTable">
     insert into order_table (id, order_id, parking_id, 
       user_id, parking_space_id, order_status, 
-      gmt_create, gmt_update, deleted
+      begin_parking_time, end_parking_time, gmt_create, 
+      gmt_update, deleted, license_plate
       )
     values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=VARCHAR}, #{parkingId,jdbcType=BIGINT}, 
       #{userId,jdbcType=BIGINT}, #{parkingSpaceId,jdbcType=VARCHAR}, #{orderStatus,jdbcType=TINYINT}, 
-      #{gmtCreate,jdbcType=DATE}, #{gmtUpdate,jdbcType=DATE}, #{deleted,jdbcType=BIT}
+      #{beginParkingTime,jdbcType=TIMESTAMP}, #{endParkingTime,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtUpdate,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{licensePlate,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.netplus.catpark.domain.po.OrderTable">
@@ -132,6 +137,12 @@
       <if test="orderStatus != null">
         order_status,
       </if>
+      <if test="beginParkingTime != null">
+        begin_parking_time,
+      </if>
+      <if test="endParkingTime != null">
+        end_parking_time,
+      </if>
       <if test="gmtCreate != null">
         gmt_create,
       </if>
@@ -140,6 +151,9 @@
       </if>
       <if test="deleted != null">
         deleted,
+      </if>
+      <if test="licensePlate != null">
+        license_plate,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -161,14 +175,23 @@
       <if test="orderStatus != null">
         #{orderStatus,jdbcType=TINYINT},
       </if>
+      <if test="beginParkingTime != null">
+        #{beginParkingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endParkingTime != null">
+        #{endParkingTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=DATE},
+        #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="gmtUpdate != null">
-        #{gmtUpdate,jdbcType=DATE},
+        #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
+      </if>
+      <if test="licensePlate != null">
+        #{licensePlate,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -193,14 +216,23 @@
       <if test="record.orderStatus != null">
         order_status = #{record.orderStatus,jdbcType=TINYINT},
       </if>
+      <if test="record.beginParkingTime != null">
+        begin_parking_time = #{record.beginParkingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endParkingTime != null">
+        end_parking_time = #{record.endParkingTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=DATE},
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.gmtUpdate != null">
-        gmt_update = #{record.gmtUpdate,jdbcType=DATE},
+        gmt_update = #{record.gmtUpdate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.deleted != null">
         deleted = #{record.deleted,jdbcType=BIT},
+      </if>
+      <if test="record.licensePlate != null">
+        license_plate = #{record.licensePlate,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -215,9 +247,12 @@
       user_id = #{record.userId,jdbcType=BIGINT},
       parking_space_id = #{record.parkingSpaceId,jdbcType=VARCHAR},
       order_status = #{record.orderStatus,jdbcType=TINYINT},
-      gmt_create = #{record.gmtCreate,jdbcType=DATE},
-      gmt_update = #{record.gmtUpdate,jdbcType=DATE},
-      deleted = #{record.deleted,jdbcType=BIT}
+      begin_parking_time = #{record.beginParkingTime,jdbcType=TIMESTAMP},
+      end_parking_time = #{record.endParkingTime,jdbcType=TIMESTAMP},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_update = #{record.gmtUpdate,jdbcType=TIMESTAMP},
+      deleted = #{record.deleted,jdbcType=BIT},
+      license_plate = #{record.licensePlate,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -240,14 +275,23 @@
       <if test="orderStatus != null">
         order_status = #{orderStatus,jdbcType=TINYINT},
       </if>
+      <if test="beginParkingTime != null">
+        begin_parking_time = #{beginParkingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endParkingTime != null">
+        end_parking_time = #{endParkingTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=DATE},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="gmtUpdate != null">
-        gmt_update = #{gmtUpdate,jdbcType=DATE},
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
       <if test="deleted != null">
         deleted = #{deleted,jdbcType=BIT},
+      </if>
+      <if test="licensePlate != null">
+        license_plate = #{licensePlate,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -259,9 +303,12 @@
       user_id = #{userId,jdbcType=BIGINT},
       parking_space_id = #{parkingSpaceId,jdbcType=VARCHAR},
       order_status = #{orderStatus,jdbcType=TINYINT},
-      gmt_create = #{gmtCreate,jdbcType=DATE},
-      gmt_update = #{gmtUpdate,jdbcType=DATE},
-      deleted = #{deleted,jdbcType=BIT}
+      begin_parking_time = #{beginParkingTime,jdbcType=TIMESTAMP},
+      end_parking_time = #{endParkingTime,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT},
+      license_plate = #{licensePlate,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

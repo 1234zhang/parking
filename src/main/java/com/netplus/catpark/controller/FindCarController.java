@@ -19,9 +19,5 @@ import java.util.Map;
 
 @Api(tags = "寻找车接口", description = "寻找自己车停的位置")
 public class FindCarController {
-    @GetMapping("/test")
-    public void test(Map<String,Object> map) {
-        map.put("hello", "hello world ");
-        System.out.println(map.get("world"));
-    }
+
 }

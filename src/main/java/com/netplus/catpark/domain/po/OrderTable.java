@@ -15,22 +15,31 @@ public class OrderTable {
 
     private Byte orderStatus;
 
+    private Date beginParkingTime;
+
+    private Date endParkingTime;
+
     private Date gmtCreate;
 
     private Date gmtUpdate;
 
     private Boolean deleted;
 
-    public OrderTable(Long id, String orderId, Long parkingId, Long userId, String parkingSpaceId, Byte orderStatus, Date gmtCreate, Date gmtUpdate, Boolean deleted) {
+    private String licensePlate;
+
+    public OrderTable(Long id, String orderId, Long parkingId, Long userId, String parkingSpaceId, Byte orderStatus, Date beginParkingTime, Date endParkingTime, Date gmtCreate, Date gmtUpdate, Boolean deleted, String licensePlate) {
         this.id = id;
         this.orderId = orderId;
         this.parkingId = parkingId;
         this.userId = userId;
         this.parkingSpaceId = parkingSpaceId;
         this.orderStatus = orderStatus;
+        this.beginParkingTime = beginParkingTime;
+        this.endParkingTime = endParkingTime;
         this.gmtCreate = gmtCreate;
         this.gmtUpdate = gmtUpdate;
         this.deleted = deleted;
+        this.licensePlate = licensePlate;
     }
 
     public OrderTable() {
@@ -85,6 +94,22 @@ public class OrderTable {
         this.orderStatus = orderStatus;
     }
 
+    public Date getBeginParkingTime() {
+        return beginParkingTime;
+    }
+
+    public void setBeginParkingTime(Date beginParkingTime) {
+        this.beginParkingTime = beginParkingTime;
+    }
+
+    public Date getEndParkingTime() {
+        return endParkingTime;
+    }
+
+    public void setEndParkingTime(Date endParkingTime) {
+        this.endParkingTime = endParkingTime;
+    }
+
     public Date getGmtCreate() {
         return gmtCreate;
     }
@@ -107,5 +132,13 @@ public class OrderTable {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate == null ? null : licensePlate.trim();
     }
 }

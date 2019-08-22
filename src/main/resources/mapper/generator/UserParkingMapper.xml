@@ -10,7 +10,7 @@
       <arg column="longitude" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="position_geo_hash" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="payment" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="gmt_create" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="gmt_update" javaType="java.util.Date" jdbcType="DATE" />
       <arg column="deleted" javaType="java.lang.Boolean" jdbcType="BIT" />
       <arg column="begin_book_time" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -113,7 +113,7 @@
       parking_type)
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, 
       #{latitude,jdbcType=DOUBLE}, #{longitude,jdbcType=DOUBLE}, #{positionGeoHash,jdbcType=VARCHAR}, 
-      #{payment,jdbcType=INTEGER}, #{gmtCreate,jdbcType=DATE}, #{gmtUpdate,jdbcType=DATE}, 
+      #{payment,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=DATE}, 
       #{deleted,jdbcType=BIT}, #{beginBookTime,jdbcType=INTEGER}, #{endBookTime,jdbcType=INTEGER}, 
       #{parkingType,jdbcType=TINYINT})
   </insert>
@@ -183,7 +183,7 @@
         #{payment,jdbcType=INTEGER},
       </if>
       <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=DATE},
+        #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="gmtUpdate != null">
         #{gmtUpdate,jdbcType=DATE},
@@ -227,7 +227,7 @@
         payment = #{record.payment,jdbcType=INTEGER},
       </if>
       <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=DATE},
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.gmtUpdate != null">
         gmt_update = #{record.gmtUpdate,jdbcType=DATE},
@@ -258,7 +258,7 @@
       longitude = #{record.longitude,jdbcType=DOUBLE},
       position_geo_hash = #{record.positionGeoHash,jdbcType=VARCHAR},
       payment = #{record.payment,jdbcType=INTEGER},
-      gmt_create = #{record.gmtCreate,jdbcType=DATE},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       gmt_update = #{record.gmtUpdate,jdbcType=DATE},
       deleted = #{record.deleted,jdbcType=BIT},
       begin_book_time = #{record.beginBookTime,jdbcType=INTEGER},
@@ -290,7 +290,7 @@
         payment = #{payment,jdbcType=INTEGER},
       </if>
       <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=DATE},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="gmtUpdate != null">
         gmt_update = #{gmtUpdate,jdbcType=DATE},
@@ -318,7 +318,7 @@
       longitude = #{longitude,jdbcType=DOUBLE},
       position_geo_hash = #{positionGeoHash,jdbcType=VARCHAR},
       payment = #{payment,jdbcType=INTEGER},
-      gmt_create = #{gmtCreate,jdbcType=DATE},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_update = #{gmtUpdate,jdbcType=DATE},
       deleted = #{deleted,jdbcType=BIT},
       begin_book_time = #{beginBookTime,jdbcType=INTEGER},

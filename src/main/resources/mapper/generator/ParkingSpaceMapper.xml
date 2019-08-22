@@ -10,8 +10,8 @@
       <arg column="longitude" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="latitude" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="position_geo_hash" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="gmt_create" javaType="java.util.Date" jdbcType="DATE" />
-      <arg column="gmt_update" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="gmt_update" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="deleted" javaType="java.lang.Boolean" jdbcType="BIT" />
     </constructor>
   </resultMap>
@@ -109,7 +109,7 @@
       deleted)
     values (#{id,jdbcType=BIGINT}, #{parkingId,jdbcType=BIGINT}, #{parkingSpaceId,jdbcType=VARCHAR}, 
       #{parkingSpaceStatus,jdbcType=TINYINT}, #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, 
-      #{positionGeoHash,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=DATE}, #{gmtUpdate,jdbcType=DATE}, 
+      #{positionGeoHash,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
       #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.netplus.catpark.domain.po.ParkingSpace">
@@ -169,10 +169,10 @@
         #{positionGeoHash,jdbcType=VARCHAR},
       </if>
       <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=DATE},
+        #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="gmtUpdate != null">
-        #{gmtUpdate,jdbcType=DATE},
+        #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
@@ -204,10 +204,10 @@
         position_geo_hash = #{record.positionGeoHash,jdbcType=VARCHAR},
       </if>
       <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=DATE},
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.gmtUpdate != null">
-        gmt_update = #{record.gmtUpdate,jdbcType=DATE},
+        gmt_update = #{record.gmtUpdate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.deleted != null">
         deleted = #{record.deleted,jdbcType=BIT},
@@ -226,8 +226,8 @@
       longitude = #{record.longitude,jdbcType=DOUBLE},
       latitude = #{record.latitude,jdbcType=DOUBLE},
       position_geo_hash = #{record.positionGeoHash,jdbcType=VARCHAR},
-      gmt_create = #{record.gmtCreate,jdbcType=DATE},
-      gmt_update = #{record.gmtUpdate,jdbcType=DATE},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_update = #{record.gmtUpdate,jdbcType=TIMESTAMP},
       deleted = #{record.deleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -255,10 +255,10 @@
         position_geo_hash = #{positionGeoHash,jdbcType=VARCHAR},
       </if>
       <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=DATE},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="gmtUpdate != null">
-        gmt_update = #{gmtUpdate,jdbcType=DATE},
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
       <if test="deleted != null">
         deleted = #{deleted,jdbcType=BIT},
@@ -274,8 +274,8 @@
       longitude = #{longitude,jdbcType=DOUBLE},
       latitude = #{latitude,jdbcType=DOUBLE},
       position_geo_hash = #{positionGeoHash,jdbcType=VARCHAR},
-      gmt_create = #{gmtCreate,jdbcType=DATE},
-      gmt_update = #{gmtUpdate,jdbcType=DATE},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>

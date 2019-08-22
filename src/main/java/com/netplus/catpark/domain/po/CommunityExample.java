@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class UserLicenseRelExample {
+public class CommunityExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public UserLicenseRelExample() {
+    public CommunityExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -225,73 +225,143 @@ public class UserLicenseRelExample {
             return (Criteria) this;
         }
 
-        public Criteria andLicensePlateIsNull() {
-            addCriterion("license_plate is null");
+        public Criteria andTitleIsNull() {
+            addCriterion("title is null");
             return (Criteria) this;
         }
 
-        public Criteria andLicensePlateIsNotNull() {
-            addCriterion("license_plate is not null");
+        public Criteria andTitleIsNotNull() {
+            addCriterion("title is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLicensePlateEqualTo(String value) {
-            addCriterion("license_plate =", value, "licensePlate");
+        public Criteria andTitleEqualTo(String value) {
+            addCriterion("title =", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andLicensePlateNotEqualTo(String value) {
-            addCriterion("license_plate <>", value, "licensePlate");
+        public Criteria andTitleNotEqualTo(String value) {
+            addCriterion("title <>", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andLicensePlateGreaterThan(String value) {
-            addCriterion("license_plate >", value, "licensePlate");
+        public Criteria andTitleGreaterThan(String value) {
+            addCriterion("title >", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andLicensePlateGreaterThanOrEqualTo(String value) {
-            addCriterion("license_plate >=", value, "licensePlate");
+        public Criteria andTitleGreaterThanOrEqualTo(String value) {
+            addCriterion("title >=", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andLicensePlateLessThan(String value) {
-            addCriterion("license_plate <", value, "licensePlate");
+        public Criteria andTitleLessThan(String value) {
+            addCriterion("title <", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andLicensePlateLessThanOrEqualTo(String value) {
-            addCriterion("license_plate <=", value, "licensePlate");
+        public Criteria andTitleLessThanOrEqualTo(String value) {
+            addCriterion("title <=", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andLicensePlateLike(String value) {
-            addCriterion("license_plate like", value, "licensePlate");
+        public Criteria andTitleLike(String value) {
+            addCriterion("title like", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andLicensePlateNotLike(String value) {
-            addCriterion("license_plate not like", value, "licensePlate");
+        public Criteria andTitleNotLike(String value) {
+            addCriterion("title not like", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andLicensePlateIn(List<String> values) {
-            addCriterion("license_plate in", values, "licensePlate");
+        public Criteria andTitleIn(List<String> values) {
+            addCriterion("title in", values, "title");
             return (Criteria) this;
         }
 
-        public Criteria andLicensePlateNotIn(List<String> values) {
-            addCriterion("license_plate not in", values, "licensePlate");
+        public Criteria andTitleNotIn(List<String> values) {
+            addCriterion("title not in", values, "title");
             return (Criteria) this;
         }
 
-        public Criteria andLicensePlateBetween(String value1, String value2) {
-            addCriterion("license_plate between", value1, value2, "licensePlate");
+        public Criteria andTitleBetween(String value1, String value2) {
+            addCriterion("title between", value1, value2, "title");
             return (Criteria) this;
         }
 
-        public Criteria andLicensePlateNotBetween(String value1, String value2) {
-            addCriterion("license_plate not between", value1, value2, "licensePlate");
+        public Criteria andTitleNotBetween(String value1, String value2) {
+            addCriterion("title not between", value1, value2, "title");
+            return (Criteria) this;
+        }
+
+        public Criteria andTextIsNull() {
+            addCriterion("text is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTextIsNotNull() {
+            addCriterion("text is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTextEqualTo(String value) {
+            addCriterion("text =", value, "text");
+            return (Criteria) this;
+        }
+
+        public Criteria andTextNotEqualTo(String value) {
+            addCriterion("text <>", value, "text");
+            return (Criteria) this;
+        }
+
+        public Criteria andTextGreaterThan(String value) {
+            addCriterion("text >", value, "text");
+            return (Criteria) this;
+        }
+
+        public Criteria andTextGreaterThanOrEqualTo(String value) {
+            addCriterion("text >=", value, "text");
+            return (Criteria) this;
+        }
+
+        public Criteria andTextLessThan(String value) {
+            addCriterion("text <", value, "text");
+            return (Criteria) this;
+        }
+
+        public Criteria andTextLessThanOrEqualTo(String value) {
+            addCriterion("text <=", value, "text");
+            return (Criteria) this;
+        }
+
+        public Criteria andTextLike(String value) {
+            addCriterion("text like", value, "text");
+            return (Criteria) this;
+        }
+
+        public Criteria andTextNotLike(String value) {
+            addCriterion("text not like", value, "text");
+            return (Criteria) this;
+        }
+
+        public Criteria andTextIn(List<String> values) {
+            addCriterion("text in", values, "text");
+            return (Criteria) this;
+        }
+
+        public Criteria andTextNotIn(List<String> values) {
+            addCriterion("text not in", values, "text");
+            return (Criteria) this;
+        }
+
+        public Criteria andTextBetween(String value1, String value2) {
+            addCriterion("text between", value1, value2, "text");
+            return (Criteria) this;
+        }
+
+        public Criteria andTextNotBetween(String value1, String value2) {
+            addCriterion("text not between", value1, value2, "text");
             return (Criteria) this;
         }
 
