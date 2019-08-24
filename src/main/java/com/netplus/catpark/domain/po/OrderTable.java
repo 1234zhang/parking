@@ -11,6 +11,8 @@ public class OrderTable {
 
     private Long userId;
 
+    private String licensePlate;
+
     private String parkingSpaceId;
 
     private Byte orderStatus;
@@ -25,13 +27,12 @@ public class OrderTable {
 
     private Boolean deleted;
 
-    private String licensePlate;
-
-    public OrderTable(Long id, String orderId, Long parkingId, Long userId, String parkingSpaceId, Byte orderStatus, Date beginParkingTime, Date endParkingTime, Date gmtCreate, Date gmtUpdate, Boolean deleted, String licensePlate) {
+    public OrderTable(Long id, String orderId, Long parkingId, Long userId, String licensePlate, String parkingSpaceId, Byte orderStatus, Date beginParkingTime, Date endParkingTime, Date gmtCreate, Date gmtUpdate, Boolean deleted) {
         this.id = id;
         this.orderId = orderId;
         this.parkingId = parkingId;
         this.userId = userId;
+        this.licensePlate = licensePlate;
         this.parkingSpaceId = parkingSpaceId;
         this.orderStatus = orderStatus;
         this.beginParkingTime = beginParkingTime;
@@ -39,7 +40,6 @@ public class OrderTable {
         this.gmtCreate = gmtCreate;
         this.gmtUpdate = gmtUpdate;
         this.deleted = deleted;
-        this.licensePlate = licensePlate;
     }
 
     public OrderTable() {
@@ -76,6 +76,14 @@ public class OrderTable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate == null ? null : licensePlate.trim();
     }
 
     public String getParkingSpaceId() {
@@ -132,13 +140,5 @@ public class OrderTable {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
-    }
-
-    public String getLicensePlate() {
-        return licensePlate;
-    }
-
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate == null ? null : licensePlate.trim();
     }
 }

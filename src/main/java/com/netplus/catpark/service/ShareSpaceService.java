@@ -8,13 +8,18 @@ import com.netplus.catpark.domain.bo.SpaceInfoBO;
 import com.netplus.catpark.domain.bo.UserParkingSpaceInfoBO;
 import com.netplus.catpark.domain.dto.*;
 import com.netplus.catpark.domain.model.Response;
+import com.netplus.catpark.domain.model.exception.ErrorCode;
+import com.netplus.catpark.domain.model.exception.ErrorUtil;
 import com.netplus.catpark.domain.po.*;
+import com.netplus.catpark.resolver.ApiExceptionResolver;
 import com.netplus.catpark.service.util.*;
 import com.netplus.catpark.service.util.GeoHashUtil.GeoHashHelperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -94,13 +99,23 @@ public class ShareSpaceService {
         userParking.setPayment(publishSpaceDTO.getPayment());
         userParking.setGmtUpdate(date);
         userParking.setUserId(userId);
-        userParking.setBeginBookTime(publishSpaceDTO.getBeginBookTime());
-        userParking.setEndBookTime(publishSpaceDTO.getEndBookTime());
+        userParking.setBeginBookTime(tranStringToDate(publishSpaceDTO.getBeginBookTime()));
+        userParking.setEndBookTime(tranStringToDate(publishSpaceDTO.getEndBookTime()));
         userParking.setParkingType(publishSpaceDTO.getParkingType());
         userParking.setDeleted(false);
         userParking.setPositionGeoHash(GeoHashHelperUtil.encode(publishSpaceDTO.getLat(),publishSpaceDTO.getLng()));
         userParkingMapper.insert(userParking);
         return new Response<>(0,"success", IsSuccessDTO.builder().isSuccess(true).build());
+    }
+
+    private Date tranStringToDate(String timeString){
+        try {
+            Date parse = new SimpleDateFormat("hh:mm:ss").parse(timeString);
+            return parse;
+        } catch (ParseException e) {
+            ErrorUtil.throwError(ErrorCode.SYSTEM_ERROR);
+        }
+        return null;
     }
 
     /**
@@ -191,8 +206,9 @@ public class ShareSpaceService {
         order.setGmtUpdate(date);
         order.setDeleted(false);
         order.setPayment(bookUserParkingInfoDTO.getPayment());
+        order.setParikingTime(bookUserParkingInfoDTO.getTime());
         order.setOrderStatus((byte)5);
-        order.setPrice(0);
+        order.setPrice(bookUserParkingInfoDTO.getPrice());
         userParkingOrderTableMapper.insert(order);
         return new Response<UserParkingBookDTO>(0,"success",
                 UserParkingBookDTO.

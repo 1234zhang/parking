@@ -355,6 +355,76 @@ public class OrderTableExample {
             return (Criteria) this;
         }
 
+        public Criteria andLicensePlateIsNull() {
+            addCriterion("license_plate is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateIsNotNull() {
+            addCriterion("license_plate is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateEqualTo(String value) {
+            addCriterion("license_plate =", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateNotEqualTo(String value) {
+            addCriterion("license_plate <>", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateGreaterThan(String value) {
+            addCriterion("license_plate >", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateGreaterThanOrEqualTo(String value) {
+            addCriterion("license_plate >=", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateLessThan(String value) {
+            addCriterion("license_plate <", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateLessThanOrEqualTo(String value) {
+            addCriterion("license_plate <=", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateLike(String value) {
+            addCriterion("license_plate like", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateNotLike(String value) {
+            addCriterion("license_plate not like", value, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateIn(List<String> values) {
+            addCriterion("license_plate in", values, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateNotIn(List<String> values) {
+            addCriterion("license_plate not in", values, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateBetween(String value1, String value2) {
+            addCriterion("license_plate between", value1, value2, "licensePlate");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicensePlateNotBetween(String value1, String value2) {
+            addCriterion("license_plate not between", value1, value2, "licensePlate");
+            return (Criteria) this;
+        }
+
         public Criteria andParkingSpaceIdIsNull() {
             addCriterion("parking_space_id is null");
             return (Criteria) this;
@@ -782,76 +852,6 @@ public class OrderTableExample {
 
         public Criteria andDeletedNotBetween(Boolean value1, Boolean value2) {
             addCriterion("deleted not between", value1, value2, "deleted");
-            return (Criteria) this;
-        }
-
-        public Criteria andLicensePlateIsNull() {
-            addCriterion("license_plate is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLicensePlateIsNotNull() {
-            addCriterion("license_plate is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLicensePlateEqualTo(String value) {
-            addCriterion("license_plate =", value, "licensePlate");
-            return (Criteria) this;
-        }
-
-        public Criteria andLicensePlateNotEqualTo(String value) {
-            addCriterion("license_plate <>", value, "licensePlate");
-            return (Criteria) this;
-        }
-
-        public Criteria andLicensePlateGreaterThan(String value) {
-            addCriterion("license_plate >", value, "licensePlate");
-            return (Criteria) this;
-        }
-
-        public Criteria andLicensePlateGreaterThanOrEqualTo(String value) {
-            addCriterion("license_plate >=", value, "licensePlate");
-            return (Criteria) this;
-        }
-
-        public Criteria andLicensePlateLessThan(String value) {
-            addCriterion("license_plate <", value, "licensePlate");
-            return (Criteria) this;
-        }
-
-        public Criteria andLicensePlateLessThanOrEqualTo(String value) {
-            addCriterion("license_plate <=", value, "licensePlate");
-            return (Criteria) this;
-        }
-
-        public Criteria andLicensePlateLike(String value) {
-            addCriterion("license_plate like", value, "licensePlate");
-            return (Criteria) this;
-        }
-
-        public Criteria andLicensePlateNotLike(String value) {
-            addCriterion("license_plate not like", value, "licensePlate");
-            return (Criteria) this;
-        }
-
-        public Criteria andLicensePlateIn(List<String> values) {
-            addCriterion("license_plate in", values, "licensePlate");
-            return (Criteria) this;
-        }
-
-        public Criteria andLicensePlateNotIn(List<String> values) {
-            addCriterion("license_plate not in", values, "licensePlate");
-            return (Criteria) this;
-        }
-
-        public Criteria andLicensePlateBetween(String value1, String value2) {
-            addCriterion("license_plate between", value1, value2, "licensePlate");
-            return (Criteria) this;
-        }
-
-        public Criteria andLicensePlateNotBetween(String value1, String value2) {
-            addCriterion("license_plate not between", value1, value2, "licensePlate");
             return (Criteria) this;
         }
     }

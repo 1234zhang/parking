@@ -714,6 +714,66 @@ public class UserParkingOrderTableExample {
             addCriterion("license_plate not between", value1, value2, "licensePlate");
             return (Criteria) this;
         }
+
+        public Criteria andParikingTimeIsNull() {
+            addCriterion("pariking_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParikingTimeIsNotNull() {
+            addCriterion("pariking_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParikingTimeEqualTo(Integer value) {
+            addCriterion("pariking_time =", value, "parikingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andParikingTimeNotEqualTo(Integer value) {
+            addCriterion("pariking_time <>", value, "parikingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andParikingTimeGreaterThan(Integer value) {
+            addCriterion("pariking_time >", value, "parikingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andParikingTimeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("pariking_time >=", value, "parikingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andParikingTimeLessThan(Integer value) {
+            addCriterion("pariking_time <", value, "parikingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andParikingTimeLessThanOrEqualTo(Integer value) {
+            addCriterion("pariking_time <=", value, "parikingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andParikingTimeIn(List<Integer> values) {
+            addCriterion("pariking_time in", values, "parikingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andParikingTimeNotIn(List<Integer> values) {
+            addCriterion("pariking_time not in", values, "parikingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andParikingTimeBetween(Integer value1, Integer value2) {
+            addCriterion("pariking_time between", value1, value2, "parikingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andParikingTimeNotBetween(Integer value1, Integer value2) {
+            addCriterion("pariking_time not between", value1, value2, "parikingTime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

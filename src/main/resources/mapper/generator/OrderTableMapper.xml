@@ -7,6 +7,7 @@
       <arg column="order_id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="parking_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="license_plate" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="parking_space_id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="order_status" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="begin_parking_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
@@ -14,7 +15,6 @@
       <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="gmt_update" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="deleted" javaType="java.lang.Boolean" jdbcType="BIT" />
-      <arg column="license_plate" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -76,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, order_id, parking_id, user_id, parking_space_id, order_status, begin_parking_time, 
-    end_parking_time, gmt_create, gmt_update, deleted, license_plate
+    id, order_id, parking_id, user_id, license_plate, parking_space_id, order_status, 
+    begin_parking_time, end_parking_time, gmt_create, gmt_update, deleted
   </sql>
   <select id="selectByExample" parameterType="com.netplus.catpark.domain.po.OrderTableExample" resultMap="BaseResultMap">
     select
@@ -106,14 +106,14 @@
   </delete>
   <insert id="insert" parameterType="com.netplus.catpark.domain.po.OrderTable">
     insert into order_table (id, order_id, parking_id, 
-      user_id, parking_space_id, order_status, 
-      begin_parking_time, end_parking_time, gmt_create, 
-      gmt_update, deleted, license_plate
+      user_id, license_plate, parking_space_id, 
+      order_status, begin_parking_time, end_parking_time, 
+      gmt_create, gmt_update, deleted
       )
     values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=VARCHAR}, #{parkingId,jdbcType=BIGINT}, 
-      #{userId,jdbcType=BIGINT}, #{parkingSpaceId,jdbcType=VARCHAR}, #{orderStatus,jdbcType=TINYINT}, 
-      #{beginParkingTime,jdbcType=TIMESTAMP}, #{endParkingTime,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-      #{gmtUpdate,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{licensePlate,jdbcType=VARCHAR}
+      #{userId,jdbcType=BIGINT}, #{licensePlate,jdbcType=VARCHAR}, #{parkingSpaceId,jdbcType=VARCHAR}, 
+      #{orderStatus,jdbcType=TINYINT}, #{beginParkingTime,jdbcType=TIMESTAMP}, #{endParkingTime,jdbcType=TIMESTAMP}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.netplus.catpark.domain.po.OrderTable">
@@ -130,6 +130,9 @@
       </if>
       <if test="userId != null">
         user_id,
+      </if>
+      <if test="licensePlate != null">
+        license_plate,
       </if>
       <if test="parkingSpaceId != null">
         parking_space_id,
@@ -152,9 +155,6 @@
       <if test="deleted != null">
         deleted,
       </if>
-      <if test="licensePlate != null">
-        license_plate,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -168,6 +168,9 @@
       </if>
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="licensePlate != null">
+        #{licensePlate,jdbcType=VARCHAR},
       </if>
       <if test="parkingSpaceId != null">
         #{parkingSpaceId,jdbcType=VARCHAR},
@@ -190,9 +193,6 @@
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
       </if>
-      <if test="licensePlate != null">
-        #{licensePlate,jdbcType=VARCHAR},
-      </if>
     </trim>
   </insert>
   <update id="updateByExampleSelective" parameterType="map">
@@ -209,6 +209,9 @@
       </if>
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.licensePlate != null">
+        license_plate = #{record.licensePlate,jdbcType=VARCHAR},
       </if>
       <if test="record.parkingSpaceId != null">
         parking_space_id = #{record.parkingSpaceId,jdbcType=VARCHAR},
@@ -231,9 +234,6 @@
       <if test="record.deleted != null">
         deleted = #{record.deleted,jdbcType=BIT},
       </if>
-      <if test="record.licensePlate != null">
-        license_plate = #{record.licensePlate,jdbcType=VARCHAR},
-      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -245,14 +245,14 @@
       order_id = #{record.orderId,jdbcType=VARCHAR},
       parking_id = #{record.parkingId,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
+      license_plate = #{record.licensePlate,jdbcType=VARCHAR},
       parking_space_id = #{record.parkingSpaceId,jdbcType=VARCHAR},
       order_status = #{record.orderStatus,jdbcType=TINYINT},
       begin_parking_time = #{record.beginParkingTime,jdbcType=TIMESTAMP},
       end_parking_time = #{record.endParkingTime,jdbcType=TIMESTAMP},
       gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       gmt_update = #{record.gmtUpdate,jdbcType=TIMESTAMP},
-      deleted = #{record.deleted,jdbcType=BIT},
-      license_plate = #{record.licensePlate,jdbcType=VARCHAR}
+      deleted = #{record.deleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -268,6 +268,9 @@
       </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="licensePlate != null">
+        license_plate = #{licensePlate,jdbcType=VARCHAR},
       </if>
       <if test="parkingSpaceId != null">
         parking_space_id = #{parkingSpaceId,jdbcType=VARCHAR},
@@ -290,9 +293,6 @@
       <if test="deleted != null">
         deleted = #{deleted,jdbcType=BIT},
       </if>
-      <if test="licensePlate != null">
-        license_plate = #{licensePlate,jdbcType=VARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -301,14 +301,14 @@
     set order_id = #{orderId,jdbcType=VARCHAR},
       parking_id = #{parkingId,jdbcType=BIGINT},
       user_id = #{userId,jdbcType=BIGINT},
+      license_plate = #{licensePlate,jdbcType=VARCHAR},
       parking_space_id = #{parkingSpaceId,jdbcType=VARCHAR},
       order_status = #{orderStatus,jdbcType=TINYINT},
       begin_parking_time = #{beginParkingTime,jdbcType=TIMESTAMP},
       end_parking_time = #{endParkingTime,jdbcType=TIMESTAMP},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
-      deleted = #{deleted,jdbcType=BIT},
-      license_plate = #{licensePlate,jdbcType=VARCHAR}
+      deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

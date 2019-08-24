@@ -11,10 +11,10 @@
       <arg column="position_geo_hash" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="payment" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="gmt_update" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="gmt_update" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="deleted" javaType="java.lang.Boolean" jdbcType="BIT" />
-      <arg column="begin_book_time" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="end_book_time" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="begin_book_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="end_book_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="parking_type" javaType="java.lang.Byte" jdbcType="TINYINT" />
     </constructor>
   </resultMap>
@@ -113,8 +113,8 @@
       parking_type)
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, 
       #{latitude,jdbcType=DOUBLE}, #{longitude,jdbcType=DOUBLE}, #{positionGeoHash,jdbcType=VARCHAR}, 
-      #{payment,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=DATE}, 
-      #{deleted,jdbcType=BIT}, #{beginBookTime,jdbcType=INTEGER}, #{endBookTime,jdbcType=INTEGER}, 
+      #{payment,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
+      #{deleted,jdbcType=BIT}, #{beginBookTime,jdbcType=TIMESTAMP}, #{endBookTime,jdbcType=TIMESTAMP}, 
       #{parkingType,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.netplus.catpark.domain.po.UserParking">
@@ -186,16 +186,16 @@
         #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="gmtUpdate != null">
-        #{gmtUpdate,jdbcType=DATE},
+        #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
       </if>
       <if test="beginBookTime != null">
-        #{beginBookTime,jdbcType=INTEGER},
+        #{beginBookTime,jdbcType=TIMESTAMP},
       </if>
       <if test="endBookTime != null">
-        #{endBookTime,jdbcType=INTEGER},
+        #{endBookTime,jdbcType=TIMESTAMP},
       </if>
       <if test="parkingType != null">
         #{parkingType,jdbcType=TINYINT},
@@ -230,16 +230,16 @@
         gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.gmtUpdate != null">
-        gmt_update = #{record.gmtUpdate,jdbcType=DATE},
+        gmt_update = #{record.gmtUpdate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.deleted != null">
         deleted = #{record.deleted,jdbcType=BIT},
       </if>
       <if test="record.beginBookTime != null">
-        begin_book_time = #{record.beginBookTime,jdbcType=INTEGER},
+        begin_book_time = #{record.beginBookTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.endBookTime != null">
-        end_book_time = #{record.endBookTime,jdbcType=INTEGER},
+        end_book_time = #{record.endBookTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.parkingType != null">
         parking_type = #{record.parkingType,jdbcType=TINYINT},
@@ -259,10 +259,10 @@
       position_geo_hash = #{record.positionGeoHash,jdbcType=VARCHAR},
       payment = #{record.payment,jdbcType=INTEGER},
       gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      gmt_update = #{record.gmtUpdate,jdbcType=DATE},
+      gmt_update = #{record.gmtUpdate,jdbcType=TIMESTAMP},
       deleted = #{record.deleted,jdbcType=BIT},
-      begin_book_time = #{record.beginBookTime,jdbcType=INTEGER},
-      end_book_time = #{record.endBookTime,jdbcType=INTEGER},
+      begin_book_time = #{record.beginBookTime,jdbcType=TIMESTAMP},
+      end_book_time = #{record.endBookTime,jdbcType=TIMESTAMP},
       parking_type = #{record.parkingType,jdbcType=TINYINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -293,16 +293,16 @@
         gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="gmtUpdate != null">
-        gmt_update = #{gmtUpdate,jdbcType=DATE},
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
       <if test="deleted != null">
         deleted = #{deleted,jdbcType=BIT},
       </if>
       <if test="beginBookTime != null">
-        begin_book_time = #{beginBookTime,jdbcType=INTEGER},
+        begin_book_time = #{beginBookTime,jdbcType=TIMESTAMP},
       </if>
       <if test="endBookTime != null">
-        end_book_time = #{endBookTime,jdbcType=INTEGER},
+        end_book_time = #{endBookTime,jdbcType=TIMESTAMP},
       </if>
       <if test="parkingType != null">
         parking_type = #{parkingType,jdbcType=TINYINT},
@@ -319,10 +319,10 @@
       position_geo_hash = #{positionGeoHash,jdbcType=VARCHAR},
       payment = #{payment,jdbcType=INTEGER},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_update = #{gmtUpdate,jdbcType=DATE},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       deleted = #{deleted,jdbcType=BIT},
-      begin_book_time = #{beginBookTime,jdbcType=INTEGER},
-      end_book_time = #{endBookTime,jdbcType=INTEGER},
+      begin_book_time = #{beginBookTime,jdbcType=TIMESTAMP},
+      end_book_time = #{endBookTime,jdbcType=TIMESTAMP},
       parking_type = #{parkingType,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>

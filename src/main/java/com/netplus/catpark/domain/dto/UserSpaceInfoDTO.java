@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.Date;
+
 /**
  * @author Brandon.
  * @date 2019/8/21.
@@ -25,9 +27,9 @@ public class UserSpaceInfoDTO {
     @ApiModelProperty("没小时价钱")
     private Integer payment;
     @ApiModelProperty("预定开始时间")
-    private Integer beginBookTime;
+    private Date beginBookTime;
     @ApiModelProperty("预定结束时间")
-    private Integer endBookTime;
+    private Date endBookTime;
     @ApiModelProperty("预定位置经度")
     private Double lat;
     @ApiModelProperty("预定位置纬度")

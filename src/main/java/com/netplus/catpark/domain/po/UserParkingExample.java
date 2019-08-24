@@ -2,7 +2,6 @@ package com.netplus.catpark.domain.po;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class UserParkingExample {
@@ -104,32 +103,6 @@ public class UserParkingExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -643,52 +616,52 @@ public class UserParkingExample {
         }
 
         public Criteria andGmtUpdateEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_update =", value, "gmtUpdate");
+            addCriterion("gmt_update =", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_update <>", value, "gmtUpdate");
+            addCriterion("gmt_update <>", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateGreaterThan(Date value) {
-            addCriterionForJDBCDate("gmt_update >", value, "gmtUpdate");
+            addCriterion("gmt_update >", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_update >=", value, "gmtUpdate");
+            addCriterion("gmt_update >=", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateLessThan(Date value) {
-            addCriterionForJDBCDate("gmt_update <", value, "gmtUpdate");
+            addCriterion("gmt_update <", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_update <=", value, "gmtUpdate");
+            addCriterion("gmt_update <=", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateIn(List<Date> values) {
-            addCriterionForJDBCDate("gmt_update in", values, "gmtUpdate");
+            addCriterion("gmt_update in", values, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("gmt_update not in", values, "gmtUpdate");
+            addCriterion("gmt_update not in", values, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("gmt_update between", value1, value2, "gmtUpdate");
+            addCriterion("gmt_update between", value1, value2, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("gmt_update not between", value1, value2, "gmtUpdate");
+            addCriterion("gmt_update not between", value1, value2, "gmtUpdate");
             return (Criteria) this;
         }
 
@@ -762,52 +735,52 @@ public class UserParkingExample {
             return (Criteria) this;
         }
 
-        public Criteria andBeginBookTimeEqualTo(Integer value) {
+        public Criteria andBeginBookTimeEqualTo(Date value) {
             addCriterion("begin_book_time =", value, "beginBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andBeginBookTimeNotEqualTo(Integer value) {
+        public Criteria andBeginBookTimeNotEqualTo(Date value) {
             addCriterion("begin_book_time <>", value, "beginBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andBeginBookTimeGreaterThan(Integer value) {
+        public Criteria andBeginBookTimeGreaterThan(Date value) {
             addCriterion("begin_book_time >", value, "beginBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andBeginBookTimeGreaterThanOrEqualTo(Integer value) {
+        public Criteria andBeginBookTimeGreaterThanOrEqualTo(Date value) {
             addCriterion("begin_book_time >=", value, "beginBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andBeginBookTimeLessThan(Integer value) {
+        public Criteria andBeginBookTimeLessThan(Date value) {
             addCriterion("begin_book_time <", value, "beginBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andBeginBookTimeLessThanOrEqualTo(Integer value) {
+        public Criteria andBeginBookTimeLessThanOrEqualTo(Date value) {
             addCriterion("begin_book_time <=", value, "beginBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andBeginBookTimeIn(List<Integer> values) {
+        public Criteria andBeginBookTimeIn(List<Date> values) {
             addCriterion("begin_book_time in", values, "beginBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andBeginBookTimeNotIn(List<Integer> values) {
+        public Criteria andBeginBookTimeNotIn(List<Date> values) {
             addCriterion("begin_book_time not in", values, "beginBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andBeginBookTimeBetween(Integer value1, Integer value2) {
+        public Criteria andBeginBookTimeBetween(Date value1, Date value2) {
             addCriterion("begin_book_time between", value1, value2, "beginBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andBeginBookTimeNotBetween(Integer value1, Integer value2) {
+        public Criteria andBeginBookTimeNotBetween(Date value1, Date value2) {
             addCriterion("begin_book_time not between", value1, value2, "beginBookTime");
             return (Criteria) this;
         }
@@ -822,52 +795,52 @@ public class UserParkingExample {
             return (Criteria) this;
         }
 
-        public Criteria andEndBookTimeEqualTo(Integer value) {
+        public Criteria andEndBookTimeEqualTo(Date value) {
             addCriterion("end_book_time =", value, "endBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndBookTimeNotEqualTo(Integer value) {
+        public Criteria andEndBookTimeNotEqualTo(Date value) {
             addCriterion("end_book_time <>", value, "endBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndBookTimeGreaterThan(Integer value) {
+        public Criteria andEndBookTimeGreaterThan(Date value) {
             addCriterion("end_book_time >", value, "endBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndBookTimeGreaterThanOrEqualTo(Integer value) {
+        public Criteria andEndBookTimeGreaterThanOrEqualTo(Date value) {
             addCriterion("end_book_time >=", value, "endBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndBookTimeLessThan(Integer value) {
+        public Criteria andEndBookTimeLessThan(Date value) {
             addCriterion("end_book_time <", value, "endBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndBookTimeLessThanOrEqualTo(Integer value) {
+        public Criteria andEndBookTimeLessThanOrEqualTo(Date value) {
             addCriterion("end_book_time <=", value, "endBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndBookTimeIn(List<Integer> values) {
+        public Criteria andEndBookTimeIn(List<Date> values) {
             addCriterion("end_book_time in", values, "endBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndBookTimeNotIn(List<Integer> values) {
+        public Criteria andEndBookTimeNotIn(List<Date> values) {
             addCriterion("end_book_time not in", values, "endBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndBookTimeBetween(Integer value1, Integer value2) {
+        public Criteria andEndBookTimeBetween(Date value1, Date value2) {
             addCriterion("end_book_time between", value1, value2, "endBookTime");
             return (Criteria) this;
         }
 
-        public Criteria andEndBookTimeNotBetween(Integer value1, Integer value2) {
+        public Criteria andEndBookTimeNotBetween(Date value1, Date value2) {
             addCriterion("end_book_time not between", value1, value2, "endBookTime");
             return (Criteria) this;
         }

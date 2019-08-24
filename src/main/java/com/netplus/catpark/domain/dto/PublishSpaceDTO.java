@@ -28,9 +28,9 @@ public class PublishSpaceDTO {
     @ApiModelProperty("纬度")
     private Double lng;
     @ApiModelProperty("预定开始时间")
-    private Integer beginBookTime;
+    private String beginBookTime;
     @ApiModelProperty("预定结束时间")
-    private Integer endBookTime;
+    private String endBookTime;
     @ApiModelProperty("停车场类型 0 表示室内，1表示室外")
     private Byte parkingType;
 

@@ -23,13 +23,13 @@ public class UserParking {
 
     private Boolean deleted;
 
-    private Integer beginBookTime;
+    private Date beginBookTime;
 
-    private Integer endBookTime;
+    private Date endBookTime;
 
     private Byte parkingType;
 
-    public UserParking(Long id, Long userId, String address, Double latitude, Double longitude, String positionGeoHash, Integer payment, Date gmtCreate, Date gmtUpdate, Boolean deleted, Integer beginBookTime, Integer endBookTime, Byte parkingType) {
+    public UserParking(Long id, Long userId, String address, Double latitude, Double longitude, String positionGeoHash, Integer payment, Date gmtCreate, Date gmtUpdate, Boolean deleted, Date beginBookTime, Date endBookTime, Byte parkingType) {
         this.id = id;
         this.userId = userId;
         this.address = address;
@@ -129,19 +129,19 @@ public class UserParking {
         this.deleted = deleted;
     }
 
-    public Integer getBeginBookTime() {
+    public Date getBeginBookTime() {
         return beginBookTime;
     }
 
-    public void setBeginBookTime(Integer beginBookTime) {
+    public void setBeginBookTime(Date beginBookTime) {
         this.beginBookTime = beginBookTime;
     }
 
-    public Integer getEndBookTime() {
+    public Date getEndBookTime() {
         return endBookTime;
     }
 
-    public void setEndBookTime(Integer endBookTime) {
+    public void setEndBookTime(Date endBookTime) {
         this.endBookTime = endBookTime;
     }
 
