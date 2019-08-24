@@ -2,6 +2,7 @@ package com.netplus.catpark.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.netplus.catpark.dao.define.OrderTableDefineMapper;
 import com.netplus.catpark.dao.define.ParkingDefineMapper;
 import com.netplus.catpark.dao.generator.OrderTableMapper;
 import com.netplus.catpark.domain.bo.OrderInfoBo;
@@ -39,6 +40,9 @@ public class OrderService {
     @Autowired
     ParkingDefineMapper parkingDefineMapper;
 
+    @Autowired
+    OrderTableDefineMapper orderTableDefine;
+
     public  Response<Object> getResponse(PageDTO pageDTO, Byte status){
         if(pageDTO.getPage() == null || pageDTO.getCount() == null){
             return ResponseUtil.makeFail("请求参数为空");
@@ -63,6 +67,28 @@ public class OrderService {
     }
 
     /**
+     * 取消预定订单
+     * @param orderId
+     * @return
+     */
+    public Response<IsSuccessDTO> cancelOrder(String orderId){
+        //TODO 取消订单
+        OrderTableExample example = new OrderTableExample();
+        example.createCriteria().andOrderIdEqualTo(orderId).andDeletedEqualTo(false);
+        List<OrderTable> orderTables = orderTableMapper.selectByExample(example);
+        Long userId = 1L;
+        OrderTable orderTable = orderTables.get(0);
+        if(!userId.equals(orderTable.getUserId())){
+            return ResponseUtil.makeFail("非本人不能取消预定订单");
+        }
+        if(orderTable.getOrderStatus() != 5){
+            return ResponseUtil.makeFail("非预定订单不能取消");
+        }
+        orderTableDefine.cancelOrder(orderId);
+        return new Response<IsSuccessDTO>(0,"success", IsSuccessDTO.builder().isSuccess(true).build());
+    }
+
+    /**
      * 根据订单状态分类
      * @param orderTableList
      * @param idAndParkingMap
@@ -79,6 +105,7 @@ public class OrderService {
         orderTableList.forEach(b->{
             Parking parking = idAndParkingMap.get(b.getParkingId());
             OrderInfoBo build = OrderInfoBo.builder().
+                    orderId(b.getOrderId()).
                     address(parking.getAddress()).
                     gmtCreate(b.getGmtCreate()).
                     licensePlate(b.getLicensePlate()).

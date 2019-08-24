@@ -1,6 +1,6 @@
 package com.netplus.catpark.controller;
 
-import com.netplus.catpark.domain.dto.OrderAllDTO;
+import com.netplus.catpark.domain.dto.IsSuccessDTO;
 import com.netplus.catpark.domain.dto.PageDTO;
 import com.netplus.catpark.domain.model.Response;
 import com.netplus.catpark.service.OrderService;
@@ -39,18 +39,25 @@ public class OrderController {
         return orderService.getResponse(pageDTO, (byte)0);
     }
 
-    @PostMapping("getDoingOrder")
+    @PostMapping("/getDoingOrder")
     @ApiOperation("获取正在进行的订单")
     public Response getDoingOrder(@RequestBody
                                       @ApiParam(name = "pageDTO", value = "分页参数，使用json请求", required = true)
                                               PageDTO pageDTO){
         return orderService.getResponse(pageDTO, (byte)1);
     }
-    @PostMapping("getSuccessOrder")
+    @PostMapping("/getSuccessOrder")
     @ApiOperation("获取成功的订单")
     public Response getSuccessOrder(@RequestBody
                                         @ApiParam(name = "pageDTO", value = "分页参数，使用json请求", required = true)
                                                 PageDTO pageDTO){
         return orderService.getResponse(pageDTO, (byte)4);
+    }
+    @PostMapping("/cancelOrder")
+    @ApiOperation("取消订单")
+    public Response<IsSuccessDTO> cancelOrder(@RequestParam
+                                                  @ApiParam(name = "orderId", value = "订单id，使用url请求", required = true)
+                                                          String orderId){
+        return orderService.cancelOrder(orderId);
     }
 }
