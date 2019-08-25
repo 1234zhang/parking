@@ -199,6 +199,7 @@ public class ShareSpaceService {
         }
         Long userId = 1L;
         Date date = new Date();
+        String orderId = UUID.randomUUID().toString().replaceAll("-","");
         UserParkingOrderTable order = new UserParkingOrderTable();
         order.setUserId(userId);
         order.setUserParkingId(bookUserParkingInfoDTO.getUserParkingId());
@@ -207,6 +208,7 @@ public class ShareSpaceService {
         order.setDeleted(false);
         order.setPayment(bookUserParkingInfoDTO.getPayment());
         order.setParikingTime(bookUserParkingInfoDTO.getTime());
+        order.setOrderId(orderId);
         order.setOrderStatus((byte)5);
         order.setPrice(bookUserParkingInfoDTO.getPrice());
         userParkingOrderTableMapper.insert(order);

@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.netplus.catpark.domain.po.UserParkingOrderTable">
     <constructor>
       <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="order_id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="user_parking_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="payment" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -14,6 +15,7 @@
       <arg column="price" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="license_plate" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="pariking_time" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="begin_parking_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -75,8 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, user_parking_id, payment, order_status, gmt_create, gmt_update, deleted, 
-    price, license_plate, pariking_time
+    id, order_id, user_id, user_parking_id, payment, order_status, gmt_create, gmt_update, 
+    deleted, price, license_plate, pariking_time, begin_parking_time
   </sql>
   <select id="selectByExample" parameterType="com.netplus.catpark.domain.po.UserParkingOrderTableExample" resultMap="BaseResultMap">
     select
@@ -104,20 +106,25 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.netplus.catpark.domain.po.UserParkingOrderTable">
-    insert into user_parking_order_table (id, user_id, user_parking_id, 
-      payment, order_status, gmt_create, 
-      gmt_update, deleted, price, 
-      license_plate, pariking_time)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userParkingId,jdbcType=BIGINT}, 
-      #{payment,jdbcType=INTEGER}, #{orderStatus,jdbcType=TINYINT}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-      #{gmtUpdate,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{price,jdbcType=INTEGER}, 
-      #{licensePlate,jdbcType=VARCHAR}, #{parikingTime,jdbcType=INTEGER})
+    insert into user_parking_order_table (id, order_id, user_id, 
+      user_parking_id, payment, order_status, 
+      gmt_create, gmt_update, deleted, 
+      price, license_plate, pariking_time, 
+      begin_parking_time)
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
+      #{userParkingId,jdbcType=BIGINT}, #{payment,jdbcType=INTEGER}, #{orderStatus,jdbcType=TINYINT}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, 
+      #{price,jdbcType=INTEGER}, #{licensePlate,jdbcType=VARCHAR}, #{parikingTime,jdbcType=INTEGER}, 
+      #{beginParkingTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.netplus.catpark.domain.po.UserParkingOrderTable">
     insert into user_parking_order_table
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="orderId != null">
+        order_id,
       </if>
       <if test="userId != null">
         user_id,
@@ -149,10 +156,16 @@
       <if test="parikingTime != null">
         pariking_time,
       </if>
+      <if test="beginParkingTime != null">
+        begin_parking_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
@@ -184,6 +197,9 @@
       <if test="parikingTime != null">
         #{parikingTime,jdbcType=INTEGER},
       </if>
+      <if test="beginParkingTime != null">
+        #{beginParkingTime,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
   <update id="updateByExampleSelective" parameterType="map">
@@ -191,6 +207,9 @@
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderId != null">
+        order_id = #{record.orderId,jdbcType=VARCHAR},
       </if>
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=BIGINT},
@@ -222,6 +241,9 @@
       <if test="record.parikingTime != null">
         pariking_time = #{record.parikingTime,jdbcType=INTEGER},
       </if>
+      <if test="record.beginParkingTime != null">
+        begin_parking_time = #{record.beginParkingTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -230,6 +252,7 @@
   <update id="updateByExample" parameterType="map">
     update user_parking_order_table
     set id = #{record.id,jdbcType=BIGINT},
+      order_id = #{record.orderId,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=BIGINT},
       user_parking_id = #{record.userParkingId,jdbcType=BIGINT},
       payment = #{record.payment,jdbcType=INTEGER},
@@ -239,7 +262,8 @@
       deleted = #{record.deleted,jdbcType=BIT},
       price = #{record.price,jdbcType=INTEGER},
       license_plate = #{record.licensePlate,jdbcType=VARCHAR},
-      pariking_time = #{record.parikingTime,jdbcType=INTEGER}
+      pariking_time = #{record.parikingTime,jdbcType=INTEGER},
+      begin_parking_time = #{record.beginParkingTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -247,6 +271,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.netplus.catpark.domain.po.UserParkingOrderTable">
     update user_parking_order_table
     <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
       </if>
@@ -277,12 +304,16 @@
       <if test="parikingTime != null">
         pariking_time = #{parikingTime,jdbcType=INTEGER},
       </if>
+      <if test="beginParkingTime != null">
+        begin_parking_time = #{beginParkingTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.netplus.catpark.domain.po.UserParkingOrderTable">
     update user_parking_order_table
-    set user_id = #{userId,jdbcType=BIGINT},
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
       user_parking_id = #{userParkingId,jdbcType=BIGINT},
       payment = #{payment,jdbcType=INTEGER},
       order_status = #{orderStatus,jdbcType=TINYINT},
@@ -291,7 +322,8 @@
       deleted = #{deleted,jdbcType=BIT},
       price = #{price,jdbcType=INTEGER},
       license_plate = #{licensePlate,jdbcType=VARCHAR},
-      pariking_time = #{parikingTime,jdbcType=INTEGER}
+      pariking_time = #{parikingTime,jdbcType=INTEGER},
+      begin_parking_time = #{beginParkingTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

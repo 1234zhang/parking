@@ -5,6 +5,8 @@ import java.util.Date;
 public class UserParkingOrderTable {
     private Long id;
 
+    private String orderId;
+
     private Long userId;
 
     private Long userParkingId;
@@ -25,8 +27,11 @@ public class UserParkingOrderTable {
 
     private Integer parikingTime;
 
-    public UserParkingOrderTable(Long id, Long userId, Long userParkingId, Integer payment, Byte orderStatus, Date gmtCreate, Date gmtUpdate, Boolean deleted, Integer price, String licensePlate, Integer parikingTime) {
+    private Date beginParkingTime;
+
+    public UserParkingOrderTable(Long id, String orderId, Long userId, Long userParkingId, Integer payment, Byte orderStatus, Date gmtCreate, Date gmtUpdate, Boolean deleted, Integer price, String licensePlate, Integer parikingTime, Date beginParkingTime) {
         this.id = id;
+        this.orderId = orderId;
         this.userId = userId;
         this.userParkingId = userParkingId;
         this.payment = payment;
@@ -37,6 +42,7 @@ public class UserParkingOrderTable {
         this.price = price;
         this.licensePlate = licensePlate;
         this.parikingTime = parikingTime;
+        this.beginParkingTime = beginParkingTime;
     }
 
     public UserParkingOrderTable() {
@@ -49,6 +55,14 @@ public class UserParkingOrderTable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId == null ? null : orderId.trim();
     }
 
     public Long getUserId() {
@@ -129,5 +143,13 @@ public class UserParkingOrderTable {
 
     public void setParikingTime(Integer parikingTime) {
         this.parikingTime = parikingTime;
+    }
+
+    public Date getBeginParkingTime() {
+        return beginParkingTime;
+    }
+
+    public void setBeginParkingTime(Date beginParkingTime) {
+        this.beginParkingTime = beginParkingTime;
     }
 }

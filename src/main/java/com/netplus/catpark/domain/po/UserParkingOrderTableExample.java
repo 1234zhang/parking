@@ -165,6 +165,76 @@ public class UserParkingOrderTableExample {
             return (Criteria) this;
         }
 
+        public Criteria andOrderIdIsNull() {
+            addCriterion("order_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdIsNotNull() {
+            addCriterion("order_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdEqualTo(String value) {
+            addCriterion("order_id =", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdNotEqualTo(String value) {
+            addCriterion("order_id <>", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdGreaterThan(String value) {
+            addCriterion("order_id >", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdGreaterThanOrEqualTo(String value) {
+            addCriterion("order_id >=", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdLessThan(String value) {
+            addCriterion("order_id <", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdLessThanOrEqualTo(String value) {
+            addCriterion("order_id <=", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdLike(String value) {
+            addCriterion("order_id like", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdNotLike(String value) {
+            addCriterion("order_id not like", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdIn(List<String> values) {
+            addCriterion("order_id in", values, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdNotIn(List<String> values) {
+            addCriterion("order_id not in", values, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdBetween(String value1, String value2) {
+            addCriterion("order_id between", value1, value2, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdNotBetween(String value1, String value2) {
+            addCriterion("order_id not between", value1, value2, "orderId");
+            return (Criteria) this;
+        }
+
         public Criteria andUserIdIsNull() {
             addCriterion("user_id is null");
             return (Criteria) this;
@@ -772,6 +842,66 @@ public class UserParkingOrderTableExample {
 
         public Criteria andParikingTimeNotBetween(Integer value1, Integer value2) {
             addCriterion("pariking_time not between", value1, value2, "parikingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeIsNull() {
+            addCriterion("begin_parking_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeIsNotNull() {
+            addCriterion("begin_parking_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeEqualTo(Date value) {
+            addCriterion("begin_parking_time =", value, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeNotEqualTo(Date value) {
+            addCriterion("begin_parking_time <>", value, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeGreaterThan(Date value) {
+            addCriterion("begin_parking_time >", value, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("begin_parking_time >=", value, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeLessThan(Date value) {
+            addCriterion("begin_parking_time <", value, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeLessThanOrEqualTo(Date value) {
+            addCriterion("begin_parking_time <=", value, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeIn(List<Date> values) {
+            addCriterion("begin_parking_time in", values, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeNotIn(List<Date> values) {
+            addCriterion("begin_parking_time not in", values, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeBetween(Date value1, Date value2) {
+            addCriterion("begin_parking_time between", value1, value2, "beginParkingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBeginParkingTimeNotBetween(Date value1, Date value2) {
+            addCriterion("begin_parking_time not between", value1, value2, "beginParkingTime");
             return (Criteria) this;
         }
     }

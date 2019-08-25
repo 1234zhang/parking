@@ -13,4 +13,6 @@ import java.util.List;
 
 public interface UserParkingDefineMapper {
     List<UserParking> getNearbyParking(@Param(value = "geoHash") String geoHash);
+
+    List<UserParking> getUserParkingByParkingId(@Param(value = "list") List<Long> list);
 }

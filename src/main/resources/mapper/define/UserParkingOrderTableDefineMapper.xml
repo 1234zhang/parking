@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netplus.catpark.dao.define.UserParkingOrderTableDefineMapper">
+    <update id="cancelOrder">
+        UPDATE user_parking_order_table
+        SET order_status = 3
+        WHERE order_id = #{orderId} and deleted = 0
+    </update>
+</mapper>

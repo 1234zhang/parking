@@ -8,4 +8,14 @@
         LIKE CONCAT (#{geoHash},'%')
         AND deleted = 0
     </select>
+
+    <select id="getUserParkingByParkingId" parameterType="list" resultType="com.netplus.catpark.domain.po.UserParking">
+        SELECT *
+        FROM user_parking
+        WHERE id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        AND deleted = 0;
+    </select>
 </mapper>
