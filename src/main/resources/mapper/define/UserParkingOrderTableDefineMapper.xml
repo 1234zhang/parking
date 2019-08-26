@@ -6,4 +6,14 @@
         SET order_status = 3
         WHERE order_id = #{orderId} and deleted = 0
     </update>
+
+    <select id="getOrderListByOrder" parameterType="list" resultType="com.netplus.catpark.domain.po.UserParkingOrderTable">
+        SELECT *
+        FROM user_parking_order_table
+        WHERE order_id IN
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        AND deleted = 0
+    </select>
 </mapper>

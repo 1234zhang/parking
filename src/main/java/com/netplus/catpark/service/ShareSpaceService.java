@@ -1,6 +1,7 @@
 package com.netplus.catpark.service;
 
 import com.netplus.catpark.dao.define.UserParkingDefineMapper;
+import com.netplus.catpark.dao.generator.PublishOrderTableMapper;
 import com.netplus.catpark.dao.generator.UserMapper;
 import com.netplus.catpark.dao.generator.UserParkingMapper;
 import com.netplus.catpark.dao.generator.UserParkingOrderTableMapper;
@@ -50,6 +51,9 @@ public class ShareSpaceService {
 
     @Autowired
     UserParkingOrderTableMapper userParkingOrderTableMapper;
+
+    @Autowired
+    PublishOrderTableMapper publishOrderTableMapper;
     /**
      * 手机发送验证码
      * @param phoneNum
@@ -194,12 +198,14 @@ public class ShareSpaceService {
      * @return
      */
     public Response<UserParkingBookDTO> bookUserParking(BookUserParkingInfoDTO bookUserParkingInfoDTO){
+        // TODO 车牌号的获取
         if(bookUserParkingInfoDTO == null){
             return ResponseUtil.makeFail("共享车位为空");
         }
         Long userId = 1L;
         Date date = new Date();
         String orderId = UUID.randomUUID().toString().replaceAll("-","");
+        // 共享车位插入预定表
         UserParkingOrderTable order = new UserParkingOrderTable();
         order.setUserId(userId);
         order.setUserParkingId(bookUserParkingInfoDTO.getUserParkingId());
@@ -209,9 +215,25 @@ public class ShareSpaceService {
         order.setPayment(bookUserParkingInfoDTO.getPayment());
         order.setParikingTime(bookUserParkingInfoDTO.getTime());
         order.setOrderId(orderId);
+        order.setLicensePlate("sldkjflsk");
         order.setOrderStatus((byte)5);
         order.setPrice(bookUserParkingInfoDTO.getPrice());
         userParkingOrderTableMapper.insert(order);
+
+        //插入发布者的订单表
+        PublishOrderTable publishOrderTable = new PublishOrderTable();
+        UserParkingExample example = new UserParkingExample();
+        example.createCriteria().andIdEqualTo(bookUserParkingInfoDTO.getUserParkingId()).andDeletedEqualTo(false);
+        List<UserParking> userParkings = userParkingMapper.selectByExample(example);
+        publishOrderTable.setOrderId(orderId);
+        publishOrderTable.setParkingId(bookUserParkingInfoDTO.getUserParkingId());
+        publishOrderTable.setDeleted(false);
+        publishOrderTable.setGmtCreate(date);
+        publishOrderTable.setGmtUpdate(date);
+        publishOrderTable.setRentUserId(userId);
+        publishOrderTable.setPublishUserId(userParkings.get(0).getUserId());
+        publishOrderTableMapper.insert(publishOrderTable);
+
         return new Response<UserParkingBookDTO>(0,"success",
                 UserParkingBookDTO.
                         builder().

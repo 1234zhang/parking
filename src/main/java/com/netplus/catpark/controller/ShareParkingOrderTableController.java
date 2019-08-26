@@ -25,8 +25,6 @@ public class ShareParkingOrderTableController {
     @Autowired
     ShareOrderTableService shareOrderTableService;
 
-    //TODO 还有未完成订单 失败订单 成功订单
-
     @PostMapping("/getAll")
     @ApiOperation("获取所有订单")
     public Response<ShareOrderListDTO> getAllOrderList(@RequestBody

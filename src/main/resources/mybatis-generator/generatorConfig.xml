@@ -107,6 +107,12 @@
                selectByExampleQueryId="false">
             <property name="useActualColumnNames" value="false"/>
         </table>
+        <table tableName="publish_order_table" domainObjectName="PublishOrderTable"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
     </context>
 </generatorConfiguration>
 

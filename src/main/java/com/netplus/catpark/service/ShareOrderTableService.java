@@ -38,7 +38,6 @@ import java.util.Map;
 @Service
 @Slf4j
 public class ShareOrderTableService {
-    //TODO 订单相关写完了，还没有测试;
 
     @Autowired
     UserParkingOrderTableMapper userParkingOrderTableMapper;
