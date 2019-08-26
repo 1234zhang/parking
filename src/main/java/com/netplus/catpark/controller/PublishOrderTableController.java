@@ -5,6 +5,7 @@ import com.netplus.catpark.domain.dto.PublishOrderListDTO;
 import com.netplus.catpark.domain.model.Response;
 import com.netplus.catpark.service.PublishOrderService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,9 +33,34 @@ public class PublishOrderTableController {
      * @return Response
      */
     @PostMapping("/getAll")
+    @ApiOperation("获取全部订单")
     public Response<PublishOrderListDTO> getAll(@RequestBody
                                                     @ApiParam(name = "pageDTO", value = "分页参数，使用json请求", required = true)
                                                             PageDTO pageDTO){
         return publishOrderService.getAll(pageDTO, (byte)9);
+    }
+
+    @PostMapping("/getFail")
+    @ApiOperation("获取失败订单")
+    public Response<PublishOrderListDTO> getFail(@RequestBody
+                                                @ApiParam(name = "pageDTO", value = "分页参数，使用json请求", required = true)
+                                                        PageDTO pageDTO){
+        return publishOrderService.getAll(pageDTO, (byte)0);
+    }
+
+    @PostMapping("/getDoing")
+    @ApiOperation("获取正在进行的订单")
+    public Response<PublishOrderListDTO> getDoing(@RequestBody
+                                                @ApiParam(name = "pageDTO", value = "分页参数，使用json请求", required = true)
+                                                        PageDTO pageDTO){
+        return publishOrderService.getAll(pageDTO, (byte)1);
+    }
+
+    @PostMapping("/getSuccess")
+    @ApiOperation("获取成功的订单")
+    public Response<PublishOrderListDTO> getSuccess(@RequestBody
+                                                @ApiParam(name = "pageDTO", value = "分页参数，使用json请求", required = true)
+                                                        PageDTO pageDTO){
+        return publishOrderService.getAll(pageDTO, (byte)4);
     }
 }
