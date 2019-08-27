@@ -2,7 +2,6 @@ package com.netplus.catpark.domain.po;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class UserExample {
@@ -104,32 +103,6 @@ public class UserExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -259,6 +232,76 @@ public class UserExample {
 
         public Criteria andOpenIdNotBetween(String value1, String value2) {
             addCriterion("open_id not between", value1, value2, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnionIdIsNull() {
+            addCriterion("union_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnionIdIsNotNull() {
+            addCriterion("union_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnionIdEqualTo(String value) {
+            addCriterion("union_id =", value, "unionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnionIdNotEqualTo(String value) {
+            addCriterion("union_id <>", value, "unionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnionIdGreaterThan(String value) {
+            addCriterion("union_id >", value, "unionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnionIdGreaterThanOrEqualTo(String value) {
+            addCriterion("union_id >=", value, "unionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnionIdLessThan(String value) {
+            addCriterion("union_id <", value, "unionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnionIdLessThanOrEqualTo(String value) {
+            addCriterion("union_id <=", value, "unionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnionIdLike(String value) {
+            addCriterion("union_id like", value, "unionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnionIdNotLike(String value) {
+            addCriterion("union_id not like", value, "unionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnionIdIn(List<String> values) {
+            addCriterion("union_id in", values, "unionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnionIdNotIn(List<String> values) {
+            addCriterion("union_id not in", values, "unionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnionIdBetween(String value1, String value2) {
+            addCriterion("union_id between", value1, value2, "unionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnionIdNotBetween(String value1, String value2) {
+            addCriterion("union_id not between", value1, value2, "unionId");
             return (Criteria) this;
         }
 
@@ -543,52 +586,52 @@ public class UserExample {
         }
 
         public Criteria andGmtCreateEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_create =", value, "gmtCreate");
+            addCriterion("gmt_create =", value, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_create <>", value, "gmtCreate");
+            addCriterion("gmt_create <>", value, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateGreaterThan(Date value) {
-            addCriterionForJDBCDate("gmt_create >", value, "gmtCreate");
+            addCriterion("gmt_create >", value, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_create >=", value, "gmtCreate");
+            addCriterion("gmt_create >=", value, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateLessThan(Date value) {
-            addCriterionForJDBCDate("gmt_create <", value, "gmtCreate");
+            addCriterion("gmt_create <", value, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_create <=", value, "gmtCreate");
+            addCriterion("gmt_create <=", value, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateIn(List<Date> values) {
-            addCriterionForJDBCDate("gmt_create in", values, "gmtCreate");
+            addCriterion("gmt_create in", values, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("gmt_create not in", values, "gmtCreate");
+            addCriterion("gmt_create not in", values, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("gmt_create between", value1, value2, "gmtCreate");
+            addCriterion("gmt_create between", value1, value2, "gmtCreate");
             return (Criteria) this;
         }
 
         public Criteria andGmtCreateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("gmt_create not between", value1, value2, "gmtCreate");
+            addCriterion("gmt_create not between", value1, value2, "gmtCreate");
             return (Criteria) this;
         }
 
@@ -603,52 +646,52 @@ public class UserExample {
         }
 
         public Criteria andGmtUpdateEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_update =", value, "gmtUpdate");
+            addCriterion("gmt_update =", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_update <>", value, "gmtUpdate");
+            addCriterion("gmt_update <>", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateGreaterThan(Date value) {
-            addCriterionForJDBCDate("gmt_update >", value, "gmtUpdate");
+            addCriterion("gmt_update >", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_update >=", value, "gmtUpdate");
+            addCriterion("gmt_update >=", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateLessThan(Date value) {
-            addCriterionForJDBCDate("gmt_update <", value, "gmtUpdate");
+            addCriterion("gmt_update <", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("gmt_update <=", value, "gmtUpdate");
+            addCriterion("gmt_update <=", value, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateIn(List<Date> values) {
-            addCriterionForJDBCDate("gmt_update in", values, "gmtUpdate");
+            addCriterion("gmt_update in", values, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("gmt_update not in", values, "gmtUpdate");
+            addCriterion("gmt_update not in", values, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("gmt_update between", value1, value2, "gmtUpdate");
+            addCriterion("gmt_update between", value1, value2, "gmtUpdate");
             return (Criteria) this;
         }
 
         public Criteria andGmtUpdateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("gmt_update not between", value1, value2, "gmtUpdate");
+            addCriterion("gmt_update not between", value1, value2, "gmtUpdate");
             return (Criteria) this;
         }
 

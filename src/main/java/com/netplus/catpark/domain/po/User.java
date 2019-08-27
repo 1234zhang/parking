@@ -7,6 +7,8 @@ public class User {
 
     private String openId;
 
+    private String unionId;
+
     private String nickName;
 
     private String avatar;
@@ -21,9 +23,10 @@ public class User {
 
     private Boolean deleted;
 
-    public User(Long id, String openId, String nickName, String avatar, Byte gender, String phoneNum, Date gmtCreate, Date gmtUpdate, Boolean deleted) {
+    public User(Long id, String openId, String unionId, String nickName, String avatar, Byte gender, String phoneNum, Date gmtCreate, Date gmtUpdate, Boolean deleted) {
         this.id = id;
         this.openId = openId;
+        this.unionId = unionId;
         this.nickName = nickName;
         this.avatar = avatar;
         this.gender = gender;
@@ -51,6 +54,14 @@ public class User {
 
     public void setOpenId(String openId) {
         this.openId = openId == null ? null : openId.trim();
+    }
+
+    public String getUnionId() {
+        return unionId;
+    }
+
+    public void setUnionId(String unionId) {
+        this.unionId = unionId == null ? null : unionId.trim();
     }
 
     public String getNickName() {

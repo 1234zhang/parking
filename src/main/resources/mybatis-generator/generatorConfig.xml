@@ -49,8 +49,8 @@
                enableDeleteByExample="false"
                selectByExampleQueryId="false">
             <property name="useActualColumnNames" value="false"/>
-        </table>-->
-
+        </table>
+-->
         <!--车牌表-->
         <table tableName="user_license_rel" domainObjectName="UserLicenseRel"
                enableCountByExample="false"

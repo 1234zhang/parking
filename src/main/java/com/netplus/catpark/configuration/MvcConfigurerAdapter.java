@@ -35,27 +35,9 @@ public class MvcConfigurerAdapter implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> interceptorSet = new ArrayList<>();
-        interceptorSet.add("/api/**");
+        interceptorSet.add("/user/**");
         List<String> passSet = new ArrayList<>();
-        passSet.add("/api/client/min/login");
-        passSet.add("/api/client/h5/login");
-        passSet.add("/api/client/android/login");
-        passSet.add("/api/client/phone/login");
-        passSet.add("/api/document/test");
-        passSet.add("/api/document/testDown");
-        passSet.add("/api/manager/**");
-        //微信回调
-        passSet.add("/api/wxpay/min/reback");
-        passSet.add("/api/merchant/*");
-        passSet.add("/api/order/orderTest");
-        passSet.add("/api/client/sendAuthCode");
-        passSet.add("/api/client/phone/register");
-
-        List<String> merChantList = new ArrayList<>();
-        merChantList.add("/manager/sendAuthCode");
-        merChantList.add("/manager/register");
-        merChantList.add("/manager/login");
-
+        passSet.add("/User/login");
         //拦截所有请求
         registry.addInterceptor(loginInterceptor).addPathPatterns(interceptorSet).excludePathPatterns(passSet);
     }

@@ -5,12 +5,13 @@
     <constructor>
       <arg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="open_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="union_id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="nick_name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="avatar" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="gender" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="phone_num" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="gmt_create" javaType="java.util.Date" jdbcType="DATE" />
-      <arg column="gmt_update" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="gmt_update" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="deleted" javaType="java.lang.Boolean" jdbcType="BIT" />
     </constructor>
   </resultMap>
@@ -73,7 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, open_id, nick_name, avatar, gender, phone_num, gmt_create, gmt_update, deleted
+    id, open_id, union_id, nick_name, avatar, gender, phone_num, gmt_create, gmt_update, 
+    deleted
   </sql>
   <select id="selectByExample" parameterType="com.netplus.catpark.domain.po.UserExample" resultMap="BaseResultMap">
     select
@@ -91,14 +93,14 @@
     </if>
   </select>
   <insert id="insert" parameterType="com.netplus.catpark.domain.po.User">
-    insert into user (id, open_id, nick_name, 
-      avatar, gender, phone_num, 
-      gmt_create, gmt_update, deleted
-      )
-    values (#{id,jdbcType=BIGINT}, #{openId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
-      #{avatar,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, #{phoneNum,jdbcType=VARCHAR}, 
-      #{gmtCreate,jdbcType=DATE}, #{gmtUpdate,jdbcType=DATE}, #{deleted,jdbcType=BIT}
-      )
+    insert into user (id, open_id, union_id, 
+      nick_name, avatar, gender, 
+      phone_num, gmt_create, gmt_update, 
+      deleted)
+    values (#{id,jdbcType=BIGINT}, #{openId,jdbcType=VARCHAR}, #{unionId,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, 
+      #{phoneNum,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
+      #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.netplus.catpark.domain.po.User">
     insert into user
@@ -108,6 +110,9 @@
       </if>
       <if test="openId != null">
         open_id,
+      </if>
+      <if test="unionId != null">
+        union_id,
       </if>
       <if test="nickName != null">
         nick_name,
@@ -138,6 +143,9 @@
       <if test="openId != null">
         #{openId,jdbcType=VARCHAR},
       </if>
+      <if test="unionId != null">
+        #{unionId,jdbcType=VARCHAR},
+      </if>
       <if test="nickName != null">
         #{nickName,jdbcType=VARCHAR},
       </if>
@@ -151,10 +159,10 @@
         #{phoneNum,jdbcType=VARCHAR},
       </if>
       <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=DATE},
+        #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="gmtUpdate != null">
-        #{gmtUpdate,jdbcType=DATE},
+        #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
@@ -170,6 +178,9 @@
       <if test="record.openId != null">
         open_id = #{record.openId,jdbcType=VARCHAR},
       </if>
+      <if test="record.unionId != null">
+        union_id = #{record.unionId,jdbcType=VARCHAR},
+      </if>
       <if test="record.nickName != null">
         nick_name = #{record.nickName,jdbcType=VARCHAR},
       </if>
@@ -183,10 +194,10 @@
         phone_num = #{record.phoneNum,jdbcType=VARCHAR},
       </if>
       <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=DATE},
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.gmtUpdate != null">
-        gmt_update = #{record.gmtUpdate,jdbcType=DATE},
+        gmt_update = #{record.gmtUpdate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.deleted != null">
         deleted = #{record.deleted,jdbcType=BIT},
@@ -200,12 +211,13 @@
     update user
     set id = #{record.id,jdbcType=BIGINT},
       open_id = #{record.openId,jdbcType=VARCHAR},
+      union_id = #{record.unionId,jdbcType=VARCHAR},
       nick_name = #{record.nickName,jdbcType=VARCHAR},
       avatar = #{record.avatar,jdbcType=VARCHAR},
       gender = #{record.gender,jdbcType=TINYINT},
       phone_num = #{record.phoneNum,jdbcType=VARCHAR},
-      gmt_create = #{record.gmtCreate,jdbcType=DATE},
-      gmt_update = #{record.gmtUpdate,jdbcType=DATE},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_update = #{record.gmtUpdate,jdbcType=TIMESTAMP},
       deleted = #{record.deleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
