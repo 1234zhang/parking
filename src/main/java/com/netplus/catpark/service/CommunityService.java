@@ -15,6 +15,7 @@ import com.netplus.catpark.domain.po.User;
 import com.netplus.catpark.domain.po.UserExample;
 import com.netplus.catpark.service.util.ListStreamUtil;
 import com.netplus.catpark.service.util.ResponseUtil;
+import com.netplus.catpark.service.util.sensitiveWord.SensitiveFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,11 +55,13 @@ public class CommunityService {
         if (communityPublishDTO.getText() == null || communityPublishDTO.getTitle() == null) {
             return ResponseUtil.makeFail("内容或者标题不能为空");
         }
+        SensitiveFilter filter = SensitiveFilter.DEFAULT;
+        String result = filter.filter(communityPublishDTO.getText(), '*');
         Long userId = ContextUser.getUserId();
         Date date = new Date();
         Community community = new Community();
         community.setUserId(userId);
-        community.setText(communityPublishDTO.getText());
+        community.setText(result);
         community.setTitle(communityPublishDTO.getTitle());
         community.setGmtCreate(date);
         community.setGmtUpdate(date);

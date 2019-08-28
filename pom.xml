@@ -260,8 +260,9 @@
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*.xml</include>
-                    <include>**/*.properties</include>
+                    <include>*.properties</include>
                     <include>**/*/jar</include>
+                    <include>*.txt</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
@@ -270,6 +271,7 @@
                 <includes>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
+                    <include>**/*.txt</include>
                 </includes>
                 <!-- 是否替换资源中的属性-->
                 <filtering>false</filtering>
