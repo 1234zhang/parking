@@ -7,6 +7,7 @@ import com.netplus.catpark.dao.define.UserParkingDefineMapper;
 import com.netplus.catpark.dao.define.UserParkingOrderTableDefineMapper;
 import com.netplus.catpark.dao.generator.PublishOrderTableMapper;
 import com.netplus.catpark.dao.generator.UserParkingOrderTableMapper;
+import com.netplus.catpark.domain.bo.ContextUser;
 import com.netplus.catpark.domain.bo.PublishOrderInfoBO;
 import com.netplus.catpark.domain.dto.PageDTO;
 import com.netplus.catpark.domain.dto.PublishOrderListDTO;
@@ -58,7 +59,7 @@ public class PublishOrderService {
         if(pageDTO.getCount() == null || pageDTO.getPage() == null){
             return ResponseUtil.makeFail("参数不能为空");
         }
-        Long userId = 1L;
+        Long userId = ContextUser.getUserId();
         PageHelper.startPage(pageDTO.getPage(), pageDTO.getCount());
         //获取订单列表
         PublishOrderTableExample example = new PublishOrderTableExample();

@@ -1,5 +1,6 @@
 package com.netplus.catpark.service;
 
+import com.netplus.catpark.dao.generator.UserLicenseRelMapper;
 import com.netplus.catpark.dao.generator.UserMapper;
 import com.netplus.catpark.domain.bo.ContextUser;
 import com.netplus.catpark.domain.bo.RedisUser;
@@ -8,6 +9,8 @@ import com.netplus.catpark.domain.dto.*;
 import com.netplus.catpark.domain.model.Response;
 import com.netplus.catpark.domain.po.User;
 import com.netplus.catpark.domain.po.UserExample;
+import com.netplus.catpark.domain.po.UserLicenseRel;
+import com.netplus.catpark.domain.po.UserLicenseRelExample;
 import com.netplus.catpark.service.util.DecodeUtil;
 import com.netplus.catpark.service.util.MyAssert;
 import com.netplus.catpark.service.util.ResponseUtil;
@@ -36,6 +39,9 @@ public class UserService {
 
     @Autowired
     RedisTemplate redisTemplate;
+
+    @Autowired
+    UserLicenseRelMapper userLicenseRelMapper;
 
 
     /**
@@ -108,6 +114,41 @@ public class UserService {
         return new Response<>(0,"success", isSuccess);
     }
 
+    public Response<IsSuccessDTO> insertLicense(String licensePlate){
+        if(licensePlate == null || "".equals(licensePlate)){
+            return ResponseUtil.makeFail("参数不能为空");
+        }
+        if(getLicensePlate(licensePlate)){
+            return ResponseUtil.makeFail("车牌已经存在");
+        }
+        saveLicenseIntoDB(licensePlate);
+        IsSuccessDTO build = IsSuccessDTO.builder().isSuccess(true).build();
+        return new Response<>(0,"success", build);
+    }
+
+    /**
+     * 判断车牌号是否已经存在；
+     * @param license
+     * @return
+     */
+    private boolean getLicensePlate(String license){
+        UserLicenseRelExample example = new UserLicenseRelExample();
+        example.createCriteria().andLicensePlateEqualTo(license).andDeletedEqualTo(false);
+        List<UserLicenseRel> userLicenseRels = userLicenseRelMapper.selectByExample(example);
+        return userLicenseRels.size() >= 1;
+    }
+
+    private void saveLicenseIntoDB(String license){
+        Long userId = ContextUser.getUserId();
+
+        UserLicenseRel rel = new UserLicenseRel();
+        rel.setLicensePlate(license);
+        rel.setUserId(userId);
+        rel.setGmtCreate(new Date());
+        rel.setGmtUpdate(new Date());
+        rel.setDeleted(false);
+        userLicenseRelMapper.insert(rel);
+    }
     /**
      * 用户信息存储和更新
      * @param userInfoBO

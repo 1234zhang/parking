@@ -38,6 +38,7 @@ public class MvcConfigurerAdapter implements WebMvcConfigurer {
         interceptorSet.add("/user/**");
         List<String> passSet = new ArrayList<>();
         passSet.add("/User/login");
+
         //拦截所有请求
         registry.addInterceptor(loginInterceptor).addPathPatterns(interceptorSet).excludePathPatterns(passSet);
     }

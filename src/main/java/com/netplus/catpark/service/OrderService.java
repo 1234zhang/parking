@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.netplus.catpark.dao.define.OrderTableDefineMapper;
 import com.netplus.catpark.dao.define.ParkingDefineMapper;
 import com.netplus.catpark.dao.generator.OrderTableMapper;
+import com.netplus.catpark.domain.bo.ContextUser;
 import com.netplus.catpark.domain.bo.OrderInfoBo;
 import com.netplus.catpark.domain.dto.*;
 import com.netplus.catpark.domain.enums.OrderStatusEnums;
@@ -48,7 +49,7 @@ public class OrderService {
             return ResponseUtil.makeFail("请求参数为空");
         }
         PageHelper.startPage(pageDTO.getPage(), pageDTO.getCount());
-        Long userId = 1L;
+        Long userId = ContextUser.getUserId();
 
         //获取全部订单
         OrderTableExample example = new OrderTableExample();
@@ -76,7 +77,7 @@ public class OrderService {
         OrderTableExample example = new OrderTableExample();
         example.createCriteria().andOrderIdEqualTo(orderId).andDeletedEqualTo(false);
         List<OrderTable> orderTables = orderTableMapper.selectByExample(example);
-        Long userId = 1L;
+        Long userId = ContextUser.getUserId();
         OrderTable orderTable = orderTables.get(0);
         if(!userId.equals(orderTable.getUserId())){
             return ResponseUtil.makeFail("非本人不能取消预定订单");

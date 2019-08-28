@@ -5,6 +5,7 @@ import com.netplus.catpark.dao.generator.PublishOrderTableMapper;
 import com.netplus.catpark.dao.generator.UserMapper;
 import com.netplus.catpark.dao.generator.UserParkingMapper;
 import com.netplus.catpark.dao.generator.UserParkingOrderTableMapper;
+import com.netplus.catpark.domain.bo.ContextUser;
 import com.netplus.catpark.domain.bo.SpaceInfoBO;
 import com.netplus.catpark.domain.bo.UserParkingSpaceInfoBO;
 import com.netplus.catpark.domain.dto.*;
@@ -80,7 +81,7 @@ public class ShareSpaceService {
      * @return
      */
     public Response<IsSuccessDTO> publishSpace(PublishSpaceDTO publishSpaceDTO){
-        Long userId = 1L;
+        Long userId = ContextUser.getUserId();
         if(publishSpaceDTO.getPhoneNum() == null
                 || publishSpaceDTO.getAuthCode() == null){
             return ResponseUtil.makeFail("数据为空");
@@ -202,7 +203,7 @@ public class ShareSpaceService {
         if(bookUserParkingInfoDTO == null){
             return ResponseUtil.makeFail("共享车位为空");
         }
-        Long userId = 1L;
+        Long userId = ContextUser.getUserId();
         Date date = new Date();
         String orderId = UUID.randomUUID().toString().replaceAll("-","");
         // 共享车位插入预定表

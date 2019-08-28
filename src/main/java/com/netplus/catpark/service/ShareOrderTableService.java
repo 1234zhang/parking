@@ -6,6 +6,7 @@ import com.netplus.catpark.dao.define.UserDefineMapper;
 import com.netplus.catpark.dao.define.UserParkingDefineMapper;
 import com.netplus.catpark.dao.define.UserParkingOrderTableDefineMapper;
 import com.netplus.catpark.dao.generator.UserParkingOrderTableMapper;
+import com.netplus.catpark.domain.bo.ContextUser;
 import com.netplus.catpark.domain.bo.ShareOrderInfoBO;
 import com.netplus.catpark.domain.dto.IsSuccessDTO;
 import com.netplus.catpark.domain.dto.PageDTO;
@@ -62,7 +63,7 @@ public class ShareOrderTableService {
         if(pageDTO.getCount() == null || pageDTO.getCount() == null){
             return ResponseUtil.makeFail("参数为空");
         }
-        Long userId = 1L;
+        Long userId = ContextUser.getUserId();
         PageHelper.startPage(pageDTO.getPage(), pageDTO.getCount());
         UserParkingOrderTableExample example = new UserParkingOrderTableExample();
         example.setOrderByClause("gmt_create desc");
@@ -89,7 +90,7 @@ public class ShareOrderTableService {
             return ResponseUtil.makeFail("参数为空");
         }
 
-        Long userId = 1L;
+        Long userId = ContextUser.getUserId();
         UserParkingOrderTableExample example = new UserParkingOrderTableExample();
         example.createCriteria().andOrderIdEqualTo(orderId).andDeletedEqualTo(false);
         List<UserParkingOrderTable> userParkingOrderTables = userParkingOrderTableMapper.selectByExample(example);

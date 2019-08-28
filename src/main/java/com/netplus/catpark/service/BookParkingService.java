@@ -8,6 +8,7 @@ import com.netplus.catpark.dao.define.ParkingSpaceDefineMapper;
 import com.netplus.catpark.dao.generator.OrderTableMapper;
 import com.netplus.catpark.dao.generator.ParkingMapper;
 import com.netplus.catpark.dao.generator.ParkingSpaceMapper;
+import com.netplus.catpark.domain.bo.ContextUser;
 import com.netplus.catpark.domain.bo.ParkingBO;
 import com.netplus.catpark.domain.bo.SpaceInfoBO;
 import com.netplus.catpark.domain.dto.*;
@@ -142,7 +143,7 @@ public class BookParkingService {
         if(bookParkingSpaceDTO.getParkingId() == null || bookParkingSpaceDTO.getParkingSpaceId() == null){
             return new Response(1,"fail", "数据为空");
         }
-        Long userId = 1L;
+        Long userId = ContextUser.getUserId();
 
 
         String uuid = UUID.randomUUID().toString().replaceAll("-","");

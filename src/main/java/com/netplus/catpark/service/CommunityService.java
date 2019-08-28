@@ -6,6 +6,7 @@ import com.netplus.catpark.dao.define.CommunityDefineMapper;
 import com.netplus.catpark.dao.define.UserDefineMapper;
 import com.netplus.catpark.dao.generator.CommunityMapper;
 import com.netplus.catpark.domain.bo.CommunityInfoBO;
+import com.netplus.catpark.domain.bo.ContextUser;
 import com.netplus.catpark.domain.dto.*;
 import com.netplus.catpark.domain.model.Response;
 import com.netplus.catpark.domain.po.Community;
@@ -53,7 +54,7 @@ public class CommunityService {
         if (communityPublishDTO.getText() == null || communityPublishDTO.getTitle() == null) {
             return ResponseUtil.makeFail("内容或者标题不能为空");
         }
-        Long userId = 1L;
+        Long userId = ContextUser.getUserId();
         Date date = new Date();
         Community community = new Community();
         community.setUserId(userId);
@@ -77,7 +78,7 @@ public class CommunityService {
         if (pageDTO.getCount() == null || pageDTO.getPage() == null) {
             return ResponseUtil.makeFail("参数为空");
         }
-        Long userId = 1L;
+        Long userId = ContextUser.getUserId();
         //获取到帖子列表
         PageHelper.startPage(pageDTO.getPage(), pageDTO.getCount());
         List<Community> textList = communityDefineMapper.getTextList();
@@ -145,7 +146,7 @@ public class CommunityService {
         CommunityExample example = new CommunityExample();
         example.createCriteria().andIdEqualTo(textId).andDeletedEqualTo(false);
         Community community = communityMapper.selectByExample(example).get(0);
-        Long userId = 1L;
+        Long userId = ContextUser.getUserId();
         return userId.equals(community.getUserId());
     }
 }

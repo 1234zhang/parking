@@ -65,4 +65,12 @@ public class UserController {
                                                 PhoneNumCodeCheckDTO phoneNumCodeCheckDTO){
         return userService.checkAuthCode(phoneNumCodeCheckDTO);
     }
+
+    @PostMapping("/insertLicensePlate")
+    @ApiOperation("添加用户车牌")
+    public Response<IsSuccessDTO> insertLicense(@RequestParam
+                                                    @ApiParam(name = "licensePlate", value = "添加用户车牌", required = true)
+                                                            String licensePlate){
+        return userService.insertLicense(licensePlate);
+    }
 }

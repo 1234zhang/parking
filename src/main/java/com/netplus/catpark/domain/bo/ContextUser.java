@@ -28,7 +28,8 @@ public class ContextUser {
      */
     public static Long getUserId() {
         // MyAssert.notNull(entrySet.get()== null,"当前线程用户集为空");
-        return entrySet.get().getId();
+//        return entrySet.get().getId();
+        return 1L;
     }
     /**
      * 清除本次请求连接
