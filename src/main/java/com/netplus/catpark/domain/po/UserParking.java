@@ -7,19 +7,9 @@ public class UserParking {
 
     private Long userId;
 
-    private String address;
-
-    private Double latitude;
-
-    private Double longitude;
-
-    private String positionGeoHash;
+    private Long parkingInfoId;
 
     private Integer payment;
-
-    private Date gmtCreate;
-
-    private Date gmtUpdate;
 
     private Boolean deleted;
 
@@ -29,20 +19,21 @@ public class UserParking {
 
     private Byte parkingType;
 
-    public UserParking(Long id, Long userId, String address, Double latitude, Double longitude, String positionGeoHash, Integer payment, Date gmtCreate, Date gmtUpdate, Boolean deleted, Date beginBookTime, Date endBookTime, Byte parkingType) {
+    private Date gmtUpdate;
+
+    private Date gmtCreate;
+
+    public UserParking(Long id, Long userId, Long parkingInfoId, Integer payment, Boolean deleted, Date beginBookTime, Date endBookTime, Byte parkingType, Date gmtUpdate, Date gmtCreate) {
         this.id = id;
         this.userId = userId;
-        this.address = address;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.positionGeoHash = positionGeoHash;
+        this.parkingInfoId = parkingInfoId;
         this.payment = payment;
-        this.gmtCreate = gmtCreate;
-        this.gmtUpdate = gmtUpdate;
         this.deleted = deleted;
         this.beginBookTime = beginBookTime;
         this.endBookTime = endBookTime;
         this.parkingType = parkingType;
+        this.gmtUpdate = gmtUpdate;
+        this.gmtCreate = gmtCreate;
     }
 
     public UserParking() {
@@ -65,36 +56,12 @@ public class UserParking {
         this.userId = userId;
     }
 
-    public String getAddress() {
-        return address;
+    public Long getParkingInfoId() {
+        return parkingInfoId;
     }
 
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getPositionGeoHash() {
-        return positionGeoHash;
-    }
-
-    public void setPositionGeoHash(String positionGeoHash) {
-        this.positionGeoHash = positionGeoHash == null ? null : positionGeoHash.trim();
+    public void setParkingInfoId(Long parkingInfoId) {
+        this.parkingInfoId = parkingInfoId;
     }
 
     public Integer getPayment() {
@@ -103,22 +70,6 @@ public class UserParking {
 
     public void setPayment(Integer payment) {
         this.payment = payment;
-    }
-
-    public Date getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
-    public Date getGmtUpdate() {
-        return gmtUpdate;
-    }
-
-    public void setGmtUpdate(Date gmtUpdate) {
-        this.gmtUpdate = gmtUpdate;
     }
 
     public Boolean getDeleted() {
@@ -151,5 +102,21 @@ public class UserParking {
 
     public void setParkingType(Byte parkingType) {
         this.parkingType = parkingType;
+    }
+
+    public Date getGmtUpdate() {
+        return gmtUpdate;
+    }
+
+    public void setGmtUpdate(Date gmtUpdate) {
+        this.gmtUpdate = gmtUpdate;
+    }
+
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
     }
 }

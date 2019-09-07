@@ -1,10 +1,8 @@
 package com.netplus.catpark.service;
 
 import com.netplus.catpark.dao.define.UserParkingDefineMapper;
-import com.netplus.catpark.dao.generator.PublishOrderTableMapper;
-import com.netplus.catpark.dao.generator.UserMapper;
-import com.netplus.catpark.dao.generator.UserParkingMapper;
-import com.netplus.catpark.dao.generator.UserParkingOrderTableMapper;
+import com.netplus.catpark.dao.define.UserParkingInfoDefineMapper;
+import com.netplus.catpark.dao.generator.*;
 import com.netplus.catpark.domain.bo.ContextUser;
 import com.netplus.catpark.domain.bo.SpaceInfoBO;
 import com.netplus.catpark.domain.bo.UserParkingSpaceInfoBO;
@@ -13,13 +11,13 @@ import com.netplus.catpark.domain.model.Response;
 import com.netplus.catpark.domain.model.exception.ErrorCode;
 import com.netplus.catpark.domain.model.exception.ErrorUtil;
 import com.netplus.catpark.domain.po.*;
-import com.netplus.catpark.resolver.ApiExceptionResolver;
 import com.netplus.catpark.service.util.*;
 import com.netplus.catpark.service.util.GeoHashUtil.GeoHashHelperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.naming.Context;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -55,6 +53,15 @@ public class ShareSpaceService {
 
     @Autowired
     PublishOrderTableMapper publishOrderTableMapper;
+
+    @Autowired
+    UserParkingInfoDefineMapper userParkingInfoDefineMapper;
+
+    @Autowired
+    UserParkingInfoMapper userParkingInfoMapper;
+
+    @Autowired
+    UserLicenseRelMapper userLicenseRelMapper;
     /**
      * 手机发送验证码
      * @param phoneNum
@@ -97,10 +104,8 @@ public class ShareSpaceService {
         }
         Date date = new Date();
         UserParking userParking = new UserParking();
-        userParking.setAddress(publishSpaceDTO.getAddress());
         userParking.setGmtCreate(date);
-        userParking.setLatitude(publishSpaceDTO.getLat());
-        userParking.setLongitude(publishSpaceDTO.getLng());
+        userParking.setParkingInfoId(publishSpaceDTO.getParkingId());
         userParking.setPayment(publishSpaceDTO.getPayment());
         userParking.setGmtUpdate(date);
         userParking.setUserId(userId);
@@ -108,7 +113,6 @@ public class ShareSpaceService {
         userParking.setEndBookTime(tranStringToDate(publishSpaceDTO.getEndBookTime()));
         userParking.setParkingType(publishSpaceDTO.getParkingType());
         userParking.setDeleted(false);
-        userParking.setPositionGeoHash(GeoHashHelperUtil.encode(publishSpaceDTO.getLat(),publishSpaceDTO.getLng()));
         userParkingMapper.insert(userParking);
         return new Response<>(0,"success", IsSuccessDTO.builder().isSuccess(true).build());
     }
@@ -136,10 +140,10 @@ public class ShareSpaceService {
         List<String> geoHashList = GeoHashHelperUtil.around(positionDTO.getLat(),positionDTO.getLng());
         List<UserParkingSpaceInfoBO> userParkingSpaceInfoBOList = new ArrayList<>();
         Set<Long> parkingIdSet = new HashSet<>();
-        List<UserParking> userParkingList = new ArrayList<>();
+        List<UserParkingInfo> userParkingList = new ArrayList<>();
         geoHashList.forEach(b -> {
             System.out.println(b);
-            userParkingList.addAll(userParkingDefineMapper.getNearbyParking(b.substring(0,5)));
+            userParkingList.addAll(userParkingInfoDefineMapper.getNearbyParking(b.substring(0,5)));
         });
 
         userParkingList.forEach(b -> {
@@ -171,23 +175,31 @@ public class ShareSpaceService {
         UserParkingExample example = new UserParkingExample();
         example.createCriteria().andIdEqualTo(userParkingId).andDeletedEqualTo(false);
         List<UserParking> userParkings = userParkingMapper.selectByExample(example);
+        MyAssert.notNull(userParkings);
+        UserParking userParking = userParkings.get(0);
+
+
+        //获取停车位信息
+        UserParkingInfoExample parkingInfoExample = new UserParkingInfoExample();
+        parkingInfoExample.createCriteria().andIdEqualTo(userParking.getParkingInfoId()).andDeletedEqualTo(false);
+        UserParkingInfo userParkingInfo = userParkingInfoMapper.selectByExample(parkingInfoExample).get(0);
+
         if(userParkings.size() == 0){
             return ResponseUtil.makeFail("车位不存在！");
         }
-        UserParking userParking = userParkings.get(0);
         // 获取车位发布者的信息
         UserExample userExample = new UserExample();
         userExample.createCriteria().andIdEqualTo(userParking.getUserId()).andDeletedEqualTo(false);
         User user = userMapper.selectByExample(userExample).get(0);
         UserSpaceInfoDTO build = UserSpaceInfoDTO.builder().
-                address(userParking.getAddress()).
+                address(userParkingInfo.getAddress()).
                 name(user.getNickName()).
                 beginBookTime(userParking.getBeginBookTime()).
                 endBookTime(userParking.getEndBookTime()).
                 parkingType(userParking.getParkingType()).
                 payment(userParking.getPayment()).
-                lat(userParking.getLatitude()).
-                lng(userParking.getLongitude()).
+                lat(userParkingInfo.getLatitude()).
+                lng(userParkingInfo.getLongitude()).
                 phoneNum(user.getPhoneNum()).
                 build();
         return new Response<>(0,"success",build);
@@ -199,13 +211,15 @@ public class ShareSpaceService {
      * @return
      */
     public Response<UserParkingBookDTO> bookUserParking(BookUserParkingInfoDTO bookUserParkingInfoDTO){
-        // TODO 车牌号的获取
         if(bookUserParkingInfoDTO == null){
             return ResponseUtil.makeFail("共享车位为空");
         }
         Long userId = ContextUser.getUserId();
         Date date = new Date();
         String orderId = UUID.randomUUID().toString().replaceAll("-","");
+        UserLicenseRelExample  licenseRelExample = new UserLicenseRelExample();
+        licenseRelExample.createCriteria().andUserIdEqualTo(userId).andIdEqualTo(bookUserParkingInfoDTO.getPlateId()).andDeletedEqualTo(false);
+        UserLicenseRel userLicenseRel = userLicenseRelMapper.selectByExample(licenseRelExample).get(0);
         // 共享车位插入预定表
         UserParkingOrderTable order = new UserParkingOrderTable();
         order.setUserId(userId);
@@ -216,7 +230,7 @@ public class ShareSpaceService {
         order.setPayment(bookUserParkingInfoDTO.getPayment());
         order.setParikingTime(bookUserParkingInfoDTO.getTime());
         order.setOrderId(orderId);
-        order.setLicensePlate("sldkjflsk");
+        order.setLicensePlate(userLicenseRel.getLicensePlate());
         order.setOrderStatus((byte)5);
         order.setPrice(bookUserParkingInfoDTO.getPrice());
         userParkingOrderTableMapper.insert(order);
@@ -240,5 +254,20 @@ public class ShareSpaceService {
                         builder().
                         userParkingId(bookUserParkingInfoDTO.getUserParkingId()).
                         build());
+    }
+
+    /**
+     * 获取用户停车位信息
+     * @return
+     */
+    public Response<UserParkingInfoListDTO> getUserParkingInfo(){
+        UserParkingInfoExample example = new UserParkingInfoExample();
+        Long userId = ContextUser.getUserId();
+        example.createCriteria().andDeletedEqualTo(false).andUserIdEqualTo(userId);
+        List<UserParkingInfo> userParkingInfos = userParkingInfoMapper.selectByExample(example);
+        return new Response<UserParkingInfoListDTO>(0,"success", UserParkingInfoListDTO.
+                builder().
+                userParkingInfos(userParkingInfos).
+                build());
     }
 }

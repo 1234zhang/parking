@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netplus.catpark.dao.define.UserParkingInfoDefineMapper">
+    <select id="getNearbyParking" parameterType="string" resultType="com.netplus.catpark.domain.po.UserParkingInfo">
+        SELECT *
+        FROM user_parking_info
+        WHERE position_geo_hash
+        LIKE CONCAT (#{geoHash},'%')
+        AND deleted = 0
+    </select>
+
+    <update id="deletedParkingInfo">
+        UPDATE
+        FROM user_parking_info
+        SET deleted = 1
+        WHERE id = #{parkingId}
+        AND user_id = #{userId}
+    </update>
+</mapper>

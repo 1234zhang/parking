@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.netplus.catpark.dao.generator.UserParkingMapper">
-  <resultMap id="BaseResultMap" type="com.netplus.catpark.domain.po.UserParking">
+<mapper namespace="com.netplus.catpark.dao.generator.UserParkingInfoMapper">
+  <resultMap id="BaseResultMap" type="com.netplus.catpark.domain.po.UserParkingInfo">
     <constructor>
       <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="parking_info_id" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="payment" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="deleted" javaType="java.lang.Boolean" jdbcType="BIT" />
-      <arg column="begin_book_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="end_book_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="parking_type" javaType="java.lang.Byte" jdbcType="TINYINT" />
-      <arg column="gmt_update" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="latitude" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="longitude" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="position_geo_hash" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="gmt_update" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="deleted" javaType="java.lang.Boolean" jdbcType="BIT" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -74,17 +73,17 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, parking_info_id, payment, deleted, begin_book_time, end_book_time, parking_type, 
-    gmt_update, gmt_create
+    id, user_id, latitude, longitude, position_geo_hash, address, gmt_create, gmt_update, 
+    deleted
   </sql>
-  <select id="selectByExample" parameterType="com.netplus.catpark.domain.po.UserParkingExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.netplus.catpark.domain.po.UserParkingInfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from user_parking
+    from user_parking_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,25 +94,25 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from user_parking
+    from user_parking_info
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from user_parking
+    delete from user_parking_info
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.netplus.catpark.domain.po.UserParking">
-    insert into user_parking (id, user_id, parking_info_id, 
-      payment, deleted, begin_book_time, 
-      end_book_time, parking_type, gmt_update, 
-      gmt_create)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{parkingInfoId,jdbcType=BIGINT}, 
-      #{payment,jdbcType=INTEGER}, #{deleted,jdbcType=BIT}, #{beginBookTime,jdbcType=TIMESTAMP}, 
-      #{endBookTime,jdbcType=TIMESTAMP}, #{parkingType,jdbcType=TINYINT}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
-      #{gmtCreate,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.netplus.catpark.domain.po.UserParkingInfo">
+    insert into user_parking_info (id, user_id, latitude, 
+      longitude, position_geo_hash, address, 
+      gmt_create, gmt_update, deleted
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{latitude,jdbcType=DOUBLE}, 
+      #{longitude,jdbcType=DOUBLE}, #{positionGeoHash,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.netplus.catpark.domain.po.UserParking">
-    insert into user_parking
+  <insert id="insertSelective" parameterType="com.netplus.catpark.domain.po.UserParkingInfo">
+    insert into user_parking_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -121,29 +120,26 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="parkingInfoId != null">
-        parking_info_id,
+      <if test="latitude != null">
+        latitude,
       </if>
-      <if test="payment != null">
-        payment,
+      <if test="longitude != null">
+        longitude,
       </if>
-      <if test="deleted != null">
-        deleted,
+      <if test="positionGeoHash != null">
+        position_geo_hash,
       </if>
-      <if test="beginBookTime != null">
-        begin_book_time,
+      <if test="address != null">
+        address,
       </if>
-      <if test="endBookTime != null">
-        end_book_time,
-      </if>
-      <if test="parkingType != null">
-        parking_type,
+      <if test="gmtCreate != null">
+        gmt_create,
       </if>
       <if test="gmtUpdate != null">
         gmt_update,
       </if>
-      <if test="gmtCreate != null">
-        gmt_create,
+      <if test="deleted != null">
+        deleted,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -153,34 +149,31 @@
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
       </if>
-      <if test="parkingInfoId != null">
-        #{parkingInfoId,jdbcType=BIGINT},
+      <if test="latitude != null">
+        #{latitude,jdbcType=DOUBLE},
       </if>
-      <if test="payment != null">
-        #{payment,jdbcType=INTEGER},
+      <if test="longitude != null">
+        #{longitude,jdbcType=DOUBLE},
       </if>
-      <if test="deleted != null">
-        #{deleted,jdbcType=BIT},
+      <if test="positionGeoHash != null">
+        #{positionGeoHash,jdbcType=VARCHAR},
       </if>
-      <if test="beginBookTime != null">
-        #{beginBookTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endBookTime != null">
-        #{endBookTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="parkingType != null">
-        #{parkingType,jdbcType=TINYINT},
-      </if>
-      <if test="gmtUpdate != null">
-        #{gmtUpdate,jdbcType=TIMESTAMP},
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
       </if>
       <if test="gmtCreate != null">
         #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
+      </if>
     </trim>
   </insert>
   <update id="updateByExampleSelective" parameterType="map">
-    update user_parking
+    update user_parking_info
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
@@ -188,29 +181,26 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=BIGINT},
       </if>
-      <if test="record.parkingInfoId != null">
-        parking_info_id = #{record.parkingInfoId,jdbcType=BIGINT},
+      <if test="record.latitude != null">
+        latitude = #{record.latitude,jdbcType=DOUBLE},
       </if>
-      <if test="record.payment != null">
-        payment = #{record.payment,jdbcType=INTEGER},
+      <if test="record.longitude != null">
+        longitude = #{record.longitude,jdbcType=DOUBLE},
       </if>
-      <if test="record.deleted != null">
-        deleted = #{record.deleted,jdbcType=BIT},
+      <if test="record.positionGeoHash != null">
+        position_geo_hash = #{record.positionGeoHash,jdbcType=VARCHAR},
       </if>
-      <if test="record.beginBookTime != null">
-        begin_book_time = #{record.beginBookTime,jdbcType=TIMESTAMP},
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
       </if>
-      <if test="record.endBookTime != null">
-        end_book_time = #{record.endBookTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.parkingType != null">
-        parking_type = #{record.parkingType,jdbcType=TINYINT},
+      <if test="record.gmtCreate != null">
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.gmtUpdate != null">
         gmt_update = #{record.gmtUpdate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -218,65 +208,60 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update user_parking
+    update user_parking_info
     set id = #{record.id,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
-      parking_info_id = #{record.parkingInfoId,jdbcType=BIGINT},
-      payment = #{record.payment,jdbcType=INTEGER},
-      deleted = #{record.deleted,jdbcType=BIT},
-      begin_book_time = #{record.beginBookTime,jdbcType=TIMESTAMP},
-      end_book_time = #{record.endBookTime,jdbcType=TIMESTAMP},
-      parking_type = #{record.parkingType,jdbcType=TINYINT},
+      latitude = #{record.latitude,jdbcType=DOUBLE},
+      longitude = #{record.longitude,jdbcType=DOUBLE},
+      position_geo_hash = #{record.positionGeoHash,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       gmt_update = #{record.gmtUpdate,jdbcType=TIMESTAMP},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP}
+      deleted = #{record.deleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.netplus.catpark.domain.po.UserParking">
-    update user_parking
+  <update id="updateByPrimaryKeySelective" parameterType="com.netplus.catpark.domain.po.UserParkingInfo">
+    update user_parking_info
     <set>
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="parkingInfoId != null">
-        parking_info_id = #{parkingInfoId,jdbcType=BIGINT},
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=DOUBLE},
       </if>
-      <if test="payment != null">
-        payment = #{payment,jdbcType=INTEGER},
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=DOUBLE},
       </if>
-      <if test="deleted != null">
-        deleted = #{deleted,jdbcType=BIT},
+      <if test="positionGeoHash != null">
+        position_geo_hash = #{positionGeoHash,jdbcType=VARCHAR},
       </if>
-      <if test="beginBookTime != null">
-        begin_book_time = #{beginBookTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endBookTime != null">
-        end_book_time = #{endBookTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="parkingType != null">
-        parking_type = #{parkingType,jdbcType=TINYINT},
-      </if>
-      <if test="gmtUpdate != null">
-        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
       </if>
       <if test="gmtCreate != null">
         gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.netplus.catpark.domain.po.UserParking">
-    update user_parking
+  <update id="updateByPrimaryKey" parameterType="com.netplus.catpark.domain.po.UserParkingInfo">
+    update user_parking_info
     set user_id = #{userId,jdbcType=BIGINT},
-      parking_info_id = #{parkingInfoId,jdbcType=BIGINT},
-      payment = #{payment,jdbcType=INTEGER},
-      deleted = #{deleted,jdbcType=BIT},
-      begin_book_time = #{beginBookTime,jdbcType=TIMESTAMP},
-      end_book_time = #{endBookTime,jdbcType=TIMESTAMP},
-      parking_type = #{parkingType,jdbcType=TINYINT},
+      latitude = #{latitude,jdbcType=DOUBLE},
+      longitude = #{longitude,jdbcType=DOUBLE},
+      position_geo_hash = #{positionGeoHash,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
-      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+      deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -23,10 +23,8 @@ public class PublishSpaceDTO {
     private String name;
     @ApiModelProperty("每小时价钱")
     private Integer payment;
-    @ApiModelProperty("经度")
-    private Double lat;
-    @ApiModelProperty("纬度")
-    private Double lng;
+    @ApiModelProperty("用户发布的共享车位id")
+    private Long parkingId;
     @ApiModelProperty("预定开始时间")
     private String beginBookTime;
     @ApiModelProperty("预定结束时间")

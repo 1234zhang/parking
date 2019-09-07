@@ -59,4 +59,10 @@ public class ShareParkingSpaceController {
                                                                BookUserParkingInfoDTO bookUserParkingInfoDTO){
         return shareSpaceService.bookUserParking(bookUserParkingInfoDTO);
     }
+
+    @GetMapping("/getUserParkingInfo")
+    @ApiOperation("获取用户停车位的信息")
+    public Response<UserParkingInfoListDTO> getUserParking(){
+        return shareSpaceService.getUserParkingInfo();
+    }
 }

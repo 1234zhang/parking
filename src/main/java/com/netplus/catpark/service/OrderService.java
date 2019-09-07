@@ -73,7 +73,6 @@ public class OrderService {
      * @return
      */
     public Response<IsSuccessDTO> cancelOrder(String orderId){
-        //TODO 取消订单
         OrderTableExample example = new OrderTableExample();
         example.createCriteria().andOrderIdEqualTo(orderId).andDeletedEqualTo(false);
         List<OrderTable> orderTables = orderTableMapper.selectByExample(example);

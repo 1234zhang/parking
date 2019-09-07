@@ -1,17 +1,17 @@
 package com.netplus.catpark.service;
 
+import com.netplus.catpark.dao.define.UserParkingInfoDefineMapper;
 import com.netplus.catpark.dao.generator.UserLicenseRelMapper;
 import com.netplus.catpark.dao.generator.UserMapper;
+import com.netplus.catpark.dao.generator.UserParkingInfoMapper;
 import com.netplus.catpark.domain.bo.ContextUser;
 import com.netplus.catpark.domain.bo.RedisUser;
 import com.netplus.catpark.domain.bo.UserInfoBO;
 import com.netplus.catpark.domain.dto.*;
 import com.netplus.catpark.domain.model.Response;
-import com.netplus.catpark.domain.po.User;
-import com.netplus.catpark.domain.po.UserExample;
-import com.netplus.catpark.domain.po.UserLicenseRel;
-import com.netplus.catpark.domain.po.UserLicenseRelExample;
+import com.netplus.catpark.domain.po.*;
 import com.netplus.catpark.service.util.DecodeUtil;
+import com.netplus.catpark.service.util.GeoHashUtil.GeoHashHelperUtil;
 import com.netplus.catpark.service.util.MyAssert;
 import com.netplus.catpark.service.util.ResponseUtil;
 import com.netplus.catpark.service.util.wxMinProgram.WxMinProgramUtil;
@@ -42,6 +42,12 @@ public class UserService {
 
     @Autowired
     UserLicenseRelMapper userLicenseRelMapper;
+
+    @Autowired
+    UserParkingInfoMapper userParkingInfoMapper;
+
+    @Autowired
+    UserParkingInfoDefineMapper userParkingInfoDefineMapper;
 
 
     /**
@@ -258,5 +264,42 @@ public class UserService {
         user.setSex(userInfoBO.getGender());
 
         redisTemplate.opsForValue().set(token, user, 7L, TimeUnit.DAYS);
+    }
+
+    /**
+     * 保存车位信息
+     * @param parkingInfoDTO
+     * @return
+     */
+    public Response<IsSuccessDTO> saveParkingInfo(ParkingInfoDTO parkingInfoDTO){
+        String hash = GeoHashHelperUtil.encode(parkingInfoDTO.getLat(),parkingInfoDTO.getLng());
+        Long userId = ContextUser.getUserId();
+        UserParkingInfo userParkingInfo = new UserParkingInfo();
+
+        userParkingInfo.setAddress(parkingInfoDTO.getAddress());
+        userParkingInfo.setLatitude(parkingInfoDTO.getLat());
+        userParkingInfo.setLongitude(parkingInfoDTO.getLng());
+        userParkingInfo.setUserId(userId);
+        userParkingInfo.setPositionGeoHash(hash);
+        userParkingInfo.setGmtUpdate(new Date());
+        userParkingInfo.setGmtCreate(new Date());
+        userParkingInfo.setDeleted(false);
+
+        userParkingInfoMapper.insert(userParkingInfo);
+        return new Response<>(0,"success", IsSuccessDTO.builder().isSuccess(true).build());
+    }
+
+    /**
+     * 删除用户停车位id
+     * @param parkingId
+     * @return
+     */
+    public Response<IsSuccessDTO> deletedParkingInfo(Long parkingId){
+        MyAssert.notNull(parkingId);
+        Long userId = ContextUser.getUserId();
+
+        userParkingInfoDefineMapper.deletedParkingInfo(parkingId,userId);
+        return new Response<IsSuccessDTO>(0, "success", IsSuccessDTO.builder().isSuccess(true).build());
+
     }
 }

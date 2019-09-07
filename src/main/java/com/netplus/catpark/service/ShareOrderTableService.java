@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.netplus.catpark.dao.define.UserDefineMapper;
 import com.netplus.catpark.dao.define.UserParkingDefineMapper;
 import com.netplus.catpark.dao.define.UserParkingOrderTableDefineMapper;
+import com.netplus.catpark.dao.generator.UserParkingInfoMapper;
 import com.netplus.catpark.dao.generator.UserParkingOrderTableMapper;
 import com.netplus.catpark.domain.bo.ContextUser;
 import com.netplus.catpark.domain.bo.ShareOrderInfoBO;
@@ -14,10 +15,7 @@ import com.netplus.catpark.domain.dto.ShareOrderListDTO;
 import com.netplus.catpark.domain.enums.OrderStatusEnums;
 import com.netplus.catpark.domain.model.Response;
 import com.netplus.catpark.domain.model.exception.ErrorUtil;
-import com.netplus.catpark.domain.po.User;
-import com.netplus.catpark.domain.po.UserParking;
-import com.netplus.catpark.domain.po.UserParkingOrderTable;
-import com.netplus.catpark.domain.po.UserParkingOrderTableExample;
+import com.netplus.catpark.domain.po.*;
 import com.netplus.catpark.service.util.ListStreamUtil;
 import com.netplus.catpark.service.util.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +49,9 @@ public class ShareOrderTableService {
 
     @Autowired
     UserParkingOrderTableDefineMapper userParkingOrderTableDefineMapper;
+
+    @Autowired
+    UserParkingInfoMapper userParkingInfoMapper;
 
 
     /**
@@ -140,8 +141,11 @@ public class ShareOrderTableService {
         list.forEach(b->{
             User user = userIdMap.get(b.getUserId());
             UserParking userParking = userParkingMap.get(b.getUserParkingId());
+            UserParkingInfoExample example = new UserParkingInfoExample();
+            example.createCriteria().andIdEqualTo(userParking.getParkingInfoId()).andDeletedEqualTo(false);
+            UserParkingInfo userParkingInfo = userParkingInfoMapper.selectByExample(example).get(0);
             ShareOrderInfoBO build = ShareOrderInfoBO.builder().
-                    address(userParking.getAddress()).
+                    address(userParkingInfo.getAddress()).
                     parkingType(userParking.getParkingType()).
                     parkingTime(dateOperation(b.getBeginParkingTime(), b.getParikingTime())).
                     price(b.getPrice()).orderId(b.getOrderId()).

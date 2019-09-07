@@ -25,7 +25,6 @@ import java.io.IOException;
 @ApiOperation("用户相关接口")
 public class UserController {
 
-    //TODO 缺少添加用户车牌的接口
 
     @Autowired
     UserService userService;
@@ -72,5 +71,21 @@ public class UserController {
                                                     @ApiParam(name = "licensePlate", value = "添加用户车牌", required = true)
                                                             String licensePlate){
         return userService.insertLicense(licensePlate);
+    }
+
+    @PostMapping("/saveParkingInfo")
+    @ApiOperation("用户添加车位信息")
+    public Response<IsSuccessDTO> saveParkingPosition(@RequestBody
+                                                      @ApiParam(name = "parkingPosition", value = "添加用户停车位", required = true)
+                                                              ParkingInfoDTO parkingInfoDTO){
+        return userService.saveParkingInfo(parkingInfoDTO);
+    }
+
+    @GetMapping("/deleteParkingInfo")
+    @ApiOperation("删除用户的车位")
+    public Response<IsSuccessDTO> deletedParkingInfo(@RequestParam
+                                                         @ApiParam(name = "parkingId", value = "用户车位id", required =  true)
+                                                            Long parkingId){
+        return userService.deletedParkingInfo(parkingId);
     }
 }

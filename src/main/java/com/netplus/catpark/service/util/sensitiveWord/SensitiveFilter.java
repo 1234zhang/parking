@@ -14,7 +14,8 @@ import java.util.NavigableSet;
  * @date 2017年1月5日 下午4:18:38
  */
 public class SensitiveFilter implements Serializable{
-	
+	//TODO 需要总结敏感词相关算法的实现
+
 	private static final long serialVersionUID = 1L;
 
 	/**

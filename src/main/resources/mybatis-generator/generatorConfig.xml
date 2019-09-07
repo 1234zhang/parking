@@ -113,6 +113,12 @@
                selectByExampleQueryId="false">
             <property name="useActualColumnNames" value="false"/>
         </table>
+        <table tableName="user_parking_info" domainObjectName="UserParkingInfo"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
     </context>
 </generatorConfiguration>
 

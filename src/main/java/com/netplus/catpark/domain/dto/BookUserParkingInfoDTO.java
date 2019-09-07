@@ -20,4 +20,6 @@ public class BookUserParkingInfoDTO {
     private Integer time;
     @ApiModelProperty("停车总共花费")
     private Integer price;
+    @ApiModelProperty("车牌id")
+    private Long plateId;
 }
