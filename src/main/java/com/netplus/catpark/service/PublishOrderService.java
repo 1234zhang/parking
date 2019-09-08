@@ -5,8 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.netplus.catpark.dao.define.UserDefineMapper;
 import com.netplus.catpark.dao.define.UserParkingDefineMapper;
 import com.netplus.catpark.dao.define.UserParkingOrderTableDefineMapper;
-import com.netplus.catpark.dao.generator.PublishOrderTableMapper;
-import com.netplus.catpark.dao.generator.UserParkingOrderTableMapper;
+import com.netplus.catpark.dao.generator.*;
 import com.netplus.catpark.domain.bo.ContextUser;
 import com.netplus.catpark.domain.bo.PublishOrderInfoBO;
 import com.netplus.catpark.domain.dto.PageDTO;
@@ -49,6 +48,15 @@ public class PublishOrderService {
 
     @Autowired
     UserParkingOrderTableDefineMapper userParkingOrderTableDefineMapper;
+
+    @Autowired
+    UserParkingMapper userParkingMapper;
+
+    @Autowired
+    UserParkingInfoMapper userParkingInfoMapper;
+
+    @Autowired
+    UserMapper userMapper;
     /**
      * 根据订单状态返回订单类型
      * @param pageDTO 分页参数
@@ -141,7 +149,9 @@ public class PublishOrderService {
         }else if(status.equals(OrderStatusEnums.ORDER_SUCCESS.getOrderStatus())){
             return successOrderList;
         }else if(status.equals(OrderStatusEnums.ORDER_DOING.getOrderStatus())){
-            return successOrderList;
+            List<PublishOrderInfoBO> publishParking = getPublishParking(ContextUser.getUserId());
+            doingOrderList.addAll(publishParking);
+            return doingOrderList;
         }else {
             return allOrderList;
         }
@@ -165,5 +175,32 @@ public class PublishOrderService {
         sb.append(begin).append("~").append(end);
         build.setRentTime(sb.toString());
         return build;
+    }
+
+    private List<PublishOrderInfoBO> getPublishParking(Long userId){
+        List<PublishOrderInfoBO> publishOrderInfoBOS = new ArrayList<>();
+        UserParkingExample example = new UserParkingExample();
+        example.createCriteria().andDeletedEqualTo(false).andUserIdEqualTo(userId);
+        List<UserParking> userParkings = userParkingMapper.selectByExample(example);
+        userParkings.forEach(parking -> {
+            UserExample userExample = new UserExample();
+            userExample.createCriteria().andIdEqualTo(userId).andDeletedEqualTo(false);
+            User user = userMapper.selectByExample(userExample).get(0);
+
+            UserParkingInfoExample userParkingInfoExample = new UserParkingInfoExample();
+            userParkingInfoExample.createCriteria().andDeletedEqualTo(false).andIdEqualTo(parking.getParkingInfoId());
+            UserParkingInfo userParkingInfo = userParkingInfoMapper.selectByExample(userParkingInfoExample).get(0);
+            PublishOrderInfoBO build = PublishOrderInfoBO.
+                    builder().
+                    orderStatus((byte) 1).
+                    payment(parking.getPayment()).
+                    nickName(user.getNickName()).
+                    phoneNum(user.getPhoneNum()).
+                    address(userParkingInfo.getAddress()).
+                    parkingType(parking.getParkingType()).gmtCreate(parking.getGmtCreate()).
+                    build();
+            publishOrderInfoBOS.add(build);
+        });
+        return publishOrderInfoBOS;
     }
 }
