@@ -10,8 +10,7 @@
     </select>
 
     <update id="deletedParkingInfo">
-        UPDATE
-        FROM user_parking_info
+        UPDATE user_parking_info
         SET deleted = 1
         WHERE id = #{parkingId}
         AND user_id = #{userId}
