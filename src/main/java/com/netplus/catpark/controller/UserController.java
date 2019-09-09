@@ -89,6 +89,7 @@ public class UserController {
         return userService.deletedParkingInfo(parkingId);
 
 
+
     }
     @GetMapping("/getPlateList")
     @ApiOperation("获取用户车牌列表")
