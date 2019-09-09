@@ -87,6 +87,8 @@ public class UserController {
                                                          @ApiParam(name = "parkingId", value = "用户车位id", required =  true)
                                                             Long parkingId){
         return userService.deletedParkingInfo(parkingId);
+
+
     }
     @GetMapping("/getPlateList")
     @ApiOperation("获取用户车牌列表")
