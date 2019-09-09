@@ -86,7 +86,7 @@ public class UserController {
     public Response<IsSuccessDTO> deletedParkingInfo(@RequestParam
                                                          @ApiParam(name = "parkingId", value = "用户车位id", required =  true)
                                                             Long parkingId){
-        return userService.deletedParkingInfo(parkingId); //测试
+        return userService.deletedParkingInfo(parkingId); //测试docker部署
     }
     @GetMapping("/getPlateList")
     @ApiOperation("获取用户车牌列表")
