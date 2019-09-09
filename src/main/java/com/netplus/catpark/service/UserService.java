@@ -49,7 +49,6 @@ public class UserService {
     @Autowired
     UserParkingInfoDefineMapper userParkingInfoDefineMapper;
 
-
     /**
      * 用户登录相关处理
      * @param minUser
@@ -301,5 +300,14 @@ public class UserService {
         userParkingInfoDefineMapper.deletedParkingInfo(parkingId,userId);
         return new Response<IsSuccessDTO>(0, "success", IsSuccessDTO.builder().isSuccess(true).build());
 
+    }
+
+    public Response<UserPlateLianceDTO> getPlate(){
+        Long userId = ContextUser.getUserId();
+        UserLicenseRelExample example = new UserLicenseRelExample();
+        example.createCriteria().andDeletedEqualTo(false).andUserIdEqualTo(userId);
+        List<UserLicenseRel> userLicenseRels = userLicenseRelMapper.selectByExample(example);
+        UserPlateLianceDTO build = UserPlateLianceDTO.builder().userLicenseRels(userLicenseRels).build();
+        return new Response<>(0,"success", build);
     }
 }

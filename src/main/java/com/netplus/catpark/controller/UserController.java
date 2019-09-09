@@ -88,4 +88,9 @@ public class UserController {
                                                             Long parkingId){
         return userService.deletedParkingInfo(parkingId);
     }
+    @GetMapping("/getPlateList")
+    @ApiOperation("获取用户车牌列表")
+    public Response<UserPlateLianceDTO> getPlateList(){
+        return userService.getPlate();
+    }
 }

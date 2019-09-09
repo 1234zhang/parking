@@ -14,6 +14,7 @@ import lombok.*;
 @EqualsAndHashCode
 @Builder
 public class CommunityInfoBO {
+    private Long id;
     private String nickName;
     private String phoneNum;
     private String title;

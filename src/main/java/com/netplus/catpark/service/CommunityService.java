@@ -96,6 +96,7 @@ public class CommunityService {
         textList.forEach(b -> {
             User user = userAndIdMap.get(b.getUserId());
             CommunityInfoBO build = CommunityInfoBO.builder().
+                    id(b.getId()).
                     avatar(user.getAvatar()).
                     nickName(user.getNickName()).
                     phoneNum(user.getPhoneNum()).
