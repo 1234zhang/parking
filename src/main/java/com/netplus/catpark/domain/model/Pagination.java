@@ -20,6 +20,7 @@ import java.io.Serializable;
 @Builder
 public class Pagination implements Serializable {
     public static final Integer MAX_PAGE_SIZE = 100;
+    private static final long serialVersionUID = 7575192656710478833L;
 
     private Integer pageNum;
     private Integer pageSize;

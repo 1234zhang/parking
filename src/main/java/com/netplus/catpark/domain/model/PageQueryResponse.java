@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -24,7 +25,9 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Builder
 @Slf4j
-public class PageQueryResponse<T> {
+public class PageQueryResponse<T> implements Serializable {
+    private static final long serialVersionUID = -5165061563000126996L;
+
     List<T> dataList = new ArrayList<T>();
     Integer pageNum;
     Long pageTotal;

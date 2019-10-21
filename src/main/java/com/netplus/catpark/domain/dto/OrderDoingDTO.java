@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -17,7 +18,9 @@ import java.util.List;
 @Data
 @Builder
 @ApiModel
-public class OrderDoingDTO {
+public class OrderDoingDTO implements Serializable {
+    private static final long serialVersionUID = 1869686247048442693L;
+
     @ApiModelProperty("获取正在进行的订单详情列表")
     private List<OrderInfoBo> orderInfoBoList;
 }
