@@ -5,9 +5,12 @@ import com.github.pagehelper.PageInfo;
 import com.netplus.catpark.dao.define.CommunityDefineMapper;
 import com.netplus.catpark.dao.define.UserDefineMapper;
 import com.netplus.catpark.dao.generator.CommunityMapper;
+import com.netplus.catpark.dao.generator.UserMapper;
 import com.netplus.catpark.domain.bo.CommunityInfoBO;
 import com.netplus.catpark.domain.bo.ContextUser;
 import com.netplus.catpark.domain.dto.*;
+import com.netplus.catpark.domain.model.PageQueryResponse;
+import com.netplus.catpark.domain.model.Pagination;
 import com.netplus.catpark.domain.model.Response;
 import com.netplus.catpark.domain.po.Community;
 import com.netplus.catpark.domain.po.CommunityExample;
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author Brandon.
@@ -38,6 +42,9 @@ public class CommunityService {
 
     @Autowired
     CommunityMapper communityMapper;
+
+    @Autowired
+    UserMapper  userMapper;
 
     @Autowired
     CommunityDefineMapper communityDefineMapper;
@@ -58,9 +65,15 @@ public class CommunityService {
         SensitiveFilter filter = SensitiveFilter.DEFAULT;
         String result = filter.filter(communityPublishDTO.getText(), '*');
         Long userId = ContextUser.getUserId();
+        UserExample example = new UserExample();
+        example.createCriteria().andIdEqualTo(userId).andDeletedEqualTo(false);
+        User user = userMapper.selectByExample(example).get(0);
         Date date = new Date();
         Community community = new Community();
         community.setUserId(userId);
+        community.setAvatar(user.getAvatar());
+        community.setPhoneNum(user.getPhoneNum());
+        community.setNickName(user.getNickName());
         community.setText(result);
         community.setTitle(communityPublishDTO.getTitle());
         community.setGmtCreate(date);
@@ -77,40 +90,23 @@ public class CommunityService {
      * @param pageDTO
      * @return
      */
-    public Response<CommunityListDTO> getTextList(PageDTO pageDTO) {
-        if (pageDTO.getCount() == null || pageDTO.getPage() == null) {
-            return ResponseUtil.makeFail("参数为空");
-        }
-        Long userId = ContextUser.getUserId();
-        //获取到帖子列表
-        PageHelper.startPage(pageDTO.getPage(), pageDTO.getCount());
-        List<Community> textList = communityDefineMapper.getTextList();
-        PageInfo pageInfo = new PageInfo(textList);
-        //获取到每个帖子的发帖人相关信息
-        List<Long> list = ListStreamUtil.getList(Community::getUserId, textList);
-        List<User> userList = userDefineMapper.getUserList(list);
-        Map<Long, User> userAndIdMap = ListStreamUtil.getMap(userList, User::getId, user -> user);
-
-        //组装帖子信息
-        List<CommunityInfoBO> infoList = new ArrayList<>();
-        textList.forEach(b -> {
-            User user = userAndIdMap.get(b.getUserId());
-            CommunityInfoBO build = CommunityInfoBO.builder().
-                    id(b.getId()).
-                    avatar(user.getAvatar()).
-                    nickName(user.getNickName()).
-                    phoneNum(user.getPhoneNum()).
-                    text(b.getText()).
-                    title(b.getTitle()).
-                    build();
-            infoList.add(build);
-        });
-        return new Response<CommunityListDTO>(0, "success", CommunityListDTO.
-                builder().
-                communityInfoBOList(infoList).
-                build());
+    public PageQueryResponse<CommunityInfoBO> getTextList(PageDTO pageDTO){
+        PageQueryResponse<Community> query = PageQueryResponse.pageQueryByPageHelper(
+                new Pagination(pageDTO.getPage(), pageDTO.getCount()), 100, pagination -> {
+                    PageHelper.startPage(pageDTO.getCount(), pageDTO.getPage());
+                    return communityDefineMapper.getTextList();
+                }
+        );
+        return query.transform(getFunction());
     }
-
+    private Function<Community, CommunityInfoBO> getFunction(){
+        return t -> CommunityInfoBO.
+                builder().
+                avatar(t.getAvatar()).
+                nickName(t.getNickName()).
+                phoneNum(t.getPhoneNum()).
+                text(t.getText()).id(t.getId()).title(t.getTitle()).build();
+    }
     /**
      * 更改帖子内容
      * @param updateTextDTO

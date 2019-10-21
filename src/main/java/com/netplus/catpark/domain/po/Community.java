@@ -17,7 +17,13 @@ public class Community {
 
     private Boolean deleted;
 
-    public Community(Long id, Long userId, String title, String text, Date gmtCreate, Date gmtUpdate, Boolean deleted) {
+    private String nickName;
+
+    private String avatar;
+
+    private String phoneNum;
+
+    public Community(Long id, Long userId, String title, String text, Date gmtCreate, Date gmtUpdate, Boolean deleted, String nickName, String avatar, String phoneNum) {
         this.id = id;
         this.userId = userId;
         this.title = title;
@@ -25,6 +31,9 @@ public class Community {
         this.gmtCreate = gmtCreate;
         this.gmtUpdate = gmtUpdate;
         this.deleted = deleted;
+        this.nickName = nickName;
+        this.avatar = avatar;
+        this.phoneNum = phoneNum;
     }
 
     public Community() {
@@ -85,5 +94,29 @@ public class Community {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName == null ? null : nickName.trim();
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar == null ? null : avatar.trim();
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum == null ? null : phoneNum.trim();
     }
 }

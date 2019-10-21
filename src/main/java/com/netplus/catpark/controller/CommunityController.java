@@ -1,6 +1,8 @@
 package com.netplus.catpark.controller;
 
+import com.netplus.catpark.domain.bo.CommunityInfoBO;
 import com.netplus.catpark.domain.dto.*;
+import com.netplus.catpark.domain.model.PageQueryResponse;
 import com.netplus.catpark.domain.model.Response;
 import com.netplus.catpark.service.CommunityService;
 import io.swagger.annotations.Api;
@@ -35,7 +37,7 @@ public class CommunityController {
 
     @PostMapping("/show")
     @ApiOperation("展示相关帖子")
-    public Response<CommunityListDTO> getCommunityList(@RequestBody
+    public PageQueryResponse<CommunityInfoBO> getCommunityList(@RequestBody
                                                            @ApiParam(name = "page", value = "分页参数，使用json请求", required = true)
                                                                    PageDTO pageDTO){
         return communityService.getTextList(pageDTO);
