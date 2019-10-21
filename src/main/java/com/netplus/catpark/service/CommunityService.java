@@ -100,6 +100,8 @@ public class CommunityService {
         return query.transform(getFunction());
     }
     private Function<Community, CommunityInfoBO> getFunction(){
+
+
         return t -> CommunityInfoBO.
                 builder().
                 avatar(t.getAvatar()).
