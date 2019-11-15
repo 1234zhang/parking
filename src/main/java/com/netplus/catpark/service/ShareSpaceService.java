@@ -4,7 +4,6 @@ import com.netplus.catpark.dao.define.UserParkingDefineMapper;
 import com.netplus.catpark.dao.define.UserParkingInfoDefineMapper;
 import com.netplus.catpark.dao.generator.*;
 import com.netplus.catpark.domain.bo.ContextUser;
-import com.netplus.catpark.domain.bo.SpaceInfoBO;
 import com.netplus.catpark.domain.bo.UserParkingSpaceInfoBO;
 import com.netplus.catpark.domain.dto.*;
 import com.netplus.catpark.domain.model.Response;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.naming.Context;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -67,9 +65,9 @@ public class ShareSpaceService {
      * @param phoneNum
      * @return
      */
-    public Response phoneCheck(String phoneNum){
+    public Response<IsSuccessDTO> phoneCheck(String phoneNum){
         if(!ParamCheckUtil.isMobile(phoneNum)){
-            return new Response(1,"手机号格式错误", IsSuccessDTO.builder().isSuccess(false).build());
+            return ResponseUtil.makeFail("手机号格式错误");
         }
         //获取六位验证码
         String authCode = CodeProductUtil.getRandomVerifyCode();
@@ -77,9 +75,9 @@ public class ShareSpaceService {
         if(shortMessageUtil.sendSms(phoneNum, authCode)){
             //将验证码存入redis中，进行下一步的验证
             redisTemplate.opsForValue().set(keepAuthCode + phoneNum, authCode, 5L, TimeUnit.MINUTES);
-            return new Response(0,"success", IsSuccessDTO.builder().isSuccess(true).build());
+            return ResponseUtil.makeSuccess(IsSuccessDTO.builder().isSuccess(true).build());
         }
-        return new Response(1,"fail",IsSuccessDTO.builder().isSuccess(false).build());
+        return ResponseUtil.makeSuccess(IsSuccessDTO.builder().isSuccess(false).build());
     }
 
     /**
@@ -159,7 +157,7 @@ public class ShareSpaceService {
             }
         });
 
-        return new Response(0,"success", ParkingListDTO.
+        return  ResponseUtil.makeSuccess(ParkingListDTO.
                 builder().
                 parkingList(Collections.singletonList(userParkingSpaceInfoBOList)).build());
     }

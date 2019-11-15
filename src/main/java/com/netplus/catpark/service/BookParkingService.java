@@ -8,15 +8,19 @@ import com.netplus.catpark.dao.define.ParkingSpaceDefineMapper;
 import com.netplus.catpark.dao.generator.OrderTableMapper;
 import com.netplus.catpark.dao.generator.ParkingMapper;
 import com.netplus.catpark.dao.generator.ParkingSpaceMapper;
+import com.netplus.catpark.dao.mongodb.LocationRepository;
 import com.netplus.catpark.domain.bo.ContextUser;
 import com.netplus.catpark.domain.bo.ParkingBO;
 import com.netplus.catpark.domain.bo.SpaceInfoBO;
 import com.netplus.catpark.domain.dto.*;
+import com.netplus.catpark.domain.model.Location;
 import com.netplus.catpark.domain.model.Response;
 import com.netplus.catpark.domain.po.*;
 import com.netplus.catpark.service.util.GeoHashUtil.GeoHashHelperUtil;
 import com.netplus.catpark.service.util.ListStreamUtil;
+import com.netplus.catpark.service.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Book;
@@ -50,6 +54,9 @@ public class BookParkingService {
     @Autowired
     OrderTableMapper orderTableMapper;
 
+    @Autowired
+    LocationRepository locationRepository;
+
     /**
      * 获取附近停车场列表
      * @param lat
@@ -57,17 +64,13 @@ public class BookParkingService {
      * @return
      */
     public Response<ParkingListDTO> getNearbyParking(double lat, double lng){
-        List<String> positionList = GeoHashHelperUtil.around(lat, lng);
+        // 使用mongoDB 获取附近的停车场
+        List<Location> locations = locationRepository.queryByCircleNear(new Point(lat, lng), 3);
         List<ParkingBO> parkingBOList = new ArrayList<>();
-        List<ParkingPosition> getNearbyList = new ArrayList<>();
-        // 获取到附近的停车场位置
-        positionList.forEach(b->{
-            getNearbyList.addAll(parkingPositionDefineMapper.selectParkingList(b.substring(0,5)));
-        });
-        //获取到停车场id
-        List<Long> list = ListStreamUtil.getList(ParkingPosition::getParkingId, getNearbyList);
+
+        List<Long> list = ListStreamUtil.getList(Location::getId, locations);
         if(list.isEmpty()){
-            return new Response(1,"fail","数据为空");
+            return ResponseUtil.makeFail("数据为空");
         }
         // 获取停车场信息
         List<Parking> parkingList = parkingDefineMapper.getParkingList(list);
@@ -89,6 +92,7 @@ public class BookParkingService {
                 parkingList(Collections.singletonList(parkingBOList)).
                 build());
     }
+
 
     /**
      * 获取空闲停车位
