@@ -1,9 +1,11 @@
 package com.netplus.catpark;
 
-import com.mongodb.Mongo;
+import com.netplus.catpark.dao.elasticsearch.ExRepository;
+import com.netplus.catpark.dao.elasticsearch.mapper.EsOrderMapper;
 import com.netplus.catpark.dao.mongodb.LocationRepository;
+import com.netplus.catpark.domain.entry.EsEntry;
+import com.netplus.catpark.domain.entry.TestEntry;
 import com.netplus.catpark.domain.model.Location;
-import org.apache.tomcat.jni.Local;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.index.GeospatialIndex;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -23,6 +26,8 @@ public class CatParkApplicationTests {
     MongoTemplate mongoTemplate;
     @Autowired
     LocationRepository locationRepository;
+    @Autowired
+    EsOrderMapper mapper;
     @Test
     public void contextLoads() {
 // test
@@ -48,5 +53,16 @@ public class CatParkApplicationTests {
         locations.forEach(location -> {
             System.out.println(location.toString());
         });
+    }
+
+    @Test
+    public void testEs() throws IOException {
+        TestEntry build = TestEntry
+                .builder()
+                .userId(2)
+                .name("123")
+                .id(2)
+                .build();
+        mapper.insertOrUpdateOne(EsEntry.builder().data(build).id(2 + "").build());
     }
 }

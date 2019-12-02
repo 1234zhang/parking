@@ -28,7 +28,7 @@ public class OrderController {
     public Response getAllOrder(@RequestBody
                                                   @ApiParam(name = "pageDTO", value = "分页参数，使用json请求", required = true)
                                                           PageDTO pageDTO){
-        return orderService.getResponse(pageDTO,(byte)9);
+        return orderService.getOrder();
     }
 
     @PostMapping("/getFailOrder")
@@ -36,7 +36,7 @@ public class OrderController {
     public Response getFailOrder(@RequestBody
                                      @ApiParam(name = "pageDTO", value = "分页参数，使用json请求", required = true)
                                              PageDTO pageDTO){
-        return orderService.getResponse(pageDTO, (byte)0);
+        return orderService.getOrder((byte)0);
     }
 
     @PostMapping("/getDoingOrder")
@@ -44,14 +44,14 @@ public class OrderController {
     public Response getDoingOrder(@RequestBody
                                       @ApiParam(name = "pageDTO", value = "分页参数，使用json请求", required = true)
                                               PageDTO pageDTO){
-        return orderService.getResponse(pageDTO, (byte)1);
+        return orderService.getOrder((byte)1);
     }
     @PostMapping("/getSuccessOrder")
     @ApiOperation("获取成功的订单")
     public Response getSuccessOrder(@RequestBody
                                         @ApiParam(name = "pageDTO", value = "分页参数，使用json请求", required = true)
                                                 PageDTO pageDTO){
-        return orderService.getResponse(pageDTO, (byte)4);
+        return orderService.getOrder((byte)4);
     }
     @PostMapping("/cancelOrder")
     @ApiOperation("取消订单")

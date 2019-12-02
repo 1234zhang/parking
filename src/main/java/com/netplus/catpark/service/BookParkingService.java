@@ -5,14 +5,17 @@ import com.github.pagehelper.PageInfo;
 import com.netplus.catpark.dao.define.ParkingDefineMapper;
 import com.netplus.catpark.dao.define.ParkingPositionDefineMapper;
 import com.netplus.catpark.dao.define.ParkingSpaceDefineMapper;
+import com.netplus.catpark.dao.elasticsearch.mapper.EsOrderMapper;
 import com.netplus.catpark.dao.generator.OrderTableMapper;
 import com.netplus.catpark.dao.generator.ParkingMapper;
 import com.netplus.catpark.dao.generator.ParkingSpaceMapper;
 import com.netplus.catpark.dao.mongodb.LocationRepository;
 import com.netplus.catpark.domain.bo.ContextUser;
+import com.netplus.catpark.domain.bo.OrderInfoBo;
 import com.netplus.catpark.domain.bo.ParkingBO;
 import com.netplus.catpark.domain.bo.SpaceInfoBO;
 import com.netplus.catpark.domain.dto.*;
+import com.netplus.catpark.domain.entry.EsEntry;
 import com.netplus.catpark.domain.model.Location;
 import com.netplus.catpark.domain.model.Response;
 import com.netplus.catpark.domain.po.*;
@@ -56,6 +59,9 @@ public class BookParkingService {
 
     @Autowired
     LocationRepository locationRepository;
+
+    @Autowired
+    EsOrderMapper esOrderMapper;
 
     /**
      * 获取附近停车场列表
@@ -138,9 +144,11 @@ public class BookParkingService {
     }
 
     /**
-     * 预定车位
-     * @param bookParkingSpaceDTO
-     * @return
+     * @Description: 在预定车位的时候，
+     * 将订单插入到elasticsearch中，
+     * 并且在修改订单状态的时候需要修改elasticsearch中的值
+     * @author: Brandon
+     * @Date: 2019/12/2 22:15
      */
     public Response<BookSuccessDTO> bookParkingSpace(BookParkingSpaceDTO bookParkingSpaceDTO){
         Date date = new Date();
@@ -162,6 +170,7 @@ public class BookParkingService {
         orderTable.setParkingSpaceId(bookParkingSpaceDTO.getParkingSpaceId());
 
         orderTableMapper.insert(orderTable);
+        insertEs(orderTable);
         //更新停车位状态
         parkingSpaceDefineMapper.updateParkingSpaceStatus((byte)3,
                 bookParkingSpaceDTO.getParkingId(),
@@ -192,5 +201,22 @@ public class BookParkingService {
         List<ParkingSpace> parkingSpaces = parkingSpaceMapper.selectByExample(example);
         FindWayDTO build = FindWayDTO.builder().lat(parkingSpaces.get(0).getLatitude()).lng(parkingSpaces.get(0).getLongitude()).build();
         return new Response<>(0,"success",build);
+    }
+
+    private void insertEs(OrderTable orderTable){
+        OrderInfoBo build = OrderInfoBo
+                .builder()
+                .id(orderTable.getId())
+                .gmtCreate(orderTable.getGmtCreate())
+                .orderId(orderTable.getOrderId())
+                .totalParkingTime("")
+                .price(1234)
+                .parkingTime(orderTable.getGmtCreate() + "")
+                .orderStatus((byte) 1)
+                .userId(ContextUser.getUserId())
+                .address("abc")
+                .licensePlate("brandon")
+                .build();
+        esOrderMapper.insertOrUpdateOne(EsEntry.builder().data(build).id(build.getId() + "").build());
     }
 }

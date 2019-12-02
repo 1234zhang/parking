@@ -15,7 +15,9 @@ import java.util.Date;
 @Builder
 
 public class OrderInfoBo {
+    private Long id;
     private String orderId;
+    private Long userId;
     private Date gmtCreate;
     private String licensePlate;
     private String address;
