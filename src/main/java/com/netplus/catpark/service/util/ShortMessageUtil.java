@@ -25,8 +25,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShortMessageUtil {
     private final String regionId = "";
-    private final String accessKeyID = "LTAIA3eTGCTL1d1y";
-    private final String accessKeySecret = "553jbR90Dozxowx9kIuXpUCVOHoJsv";
+    private final String accessKeyID = "";
+    private final String accessKeySecret = "";
 
     //阿里云短信固定名称
     private final String product = "Dysmsapi";
